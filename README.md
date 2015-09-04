@@ -16,7 +16,9 @@ Current versions will be running at 52.88.121.118 (Not hosted yet)
 - [ ] Support file uploads in posts
 - [ ] Site fully hosted and running on web server
 
-## Extras
-* Email verification
-* Websocket for push notifications
-* Make front-end look really good with Semantic UI framework
+
+### Thoughts
+* I think it would be cool to have a feature that adds a post to a notebook and
+then have to option to export all your favorited notes to a doc or pdf
+* Websockets for instant notification on new posts would be cool.
+* Use a modern frontend framework should as reactJS or angularJS.
