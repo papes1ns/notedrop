@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField('Course')
-    schools = models.ManyToManyField('School')
+    courses = models.ManyToManyField('Course', db_tabl='enrolled_course')
+    schools = models.ManyToManyField('School', db_table='current_schools')
+    
     discipline = models.CharField(max_length=50, null=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -15,8 +16,9 @@ class UserProfile(models.Model):
 
 class Course(models.Model):
     school = models.ForeignKey('School')
+    
     designator = models.CharField(max_length=3)
-    number = models.PositiveSmallIntegerField()
+    number = models.PositiveSmallIntegerField(max_length=3)
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=8, blank=True, null=True)
 
@@ -31,31 +33,32 @@ class School(models.Model):
     # TODO add image field for college stamp, stamp will be gotten via API
 
     def __unicode__(self):
-        return "{0}".format(self.name)
+        return self.name
 
 
 class Post(models.Model):
     author = models.ForeignKey(User)
     course = models.ForeignKey('Course')
+    
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
-    upvote_count = models.PositiveSmallIntegerField(default=0)
-    downvote_count = models.PositiveSmallIntegerField(default=0)
     # TODO add field for uploaded media (docs, pictures, etc.)
 
     def __unicode__(self):
-        return "{0}..".format(self.content[:20])
-
-    @property
-    def score(self):
-        return self.upvote_count - self.downvote_count
-
-    def plus_one(self):
-        self.upvote_count += 1
-
-    def minus_one(self):
-        self.downvote_count -= 1
+        if len(self.content) > 30:
+            return "{0}..".format(self.content[:30])
+        else:
+            return self.content
+            
+            
+class PostData(models.Model):
+    post = models.ForeignKey('Post')
+    user = models.ForeignKey(User)
+    
+    upvote = models.BooleanField(null=True)
+    downvote = models.BooleanField(null=True)
+    noted = models.BooleanField(null=True)
 
 # property to get related UserProfile from a User
 User.profile = property(lambda user_id: UserProfile.objects.get_or_create(
