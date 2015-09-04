@@ -15,8 +15,21 @@ def buffer_states_from_csv(filename='data/states.csv'):
             
 class Command(BaseCommand):
     help = 'Import Schools'
+    created_count = 0
     
     def handle(self, *args, **options):
         states = buffer_states_from_csv()
-        print states
-        # TODO map stats to school model
+        
+        with open('data/colleges.csv') as colleges_csv:
+            next(colleges_csv, None)  # skip the header line
+            cursor = csv.reader(colleges_csv)
+            for row in cursor:
+                obj, created = School.objects.get_or_create(
+                    name=row[0],
+                    city=row[1],
+                    state=states[row[2]]
+                )
+                if created:
+                    self.created_count += 1
+            colleges_csv.close()
+        print '{0} schools created'.format(self.created_count)
