@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def splash(request, template="splash/splash.html"):
+    return render(request, template)

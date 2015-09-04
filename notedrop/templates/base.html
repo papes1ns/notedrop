@@ -1,0 +1,12 @@
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>{% block title %}Notedrop{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href={% static "css/global.css" %}>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

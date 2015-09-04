@@ -4,7 +4,7 @@ Content feed where students can share information about their currently enrolled
 This was started as an independent study project by Nathan Papes.
 Current versions will be running at 52.88.121.118 (Not hosted yet)
 
-## TODO:
+## TODO
 - [ ] Script that imports data for colleges and state names
 - [ ] Subscribe to sections (if not present, create new one)
 - [ ] Feed of posts from other students in the same classes
@@ -16,7 +16,7 @@ Current versions will be running at 52.88.121.118 (Not hosted yet)
 - [ ] Support file uploads in posts
 - [ ] Site fully hosted and running on web server
 
-## Extras:
+## Extras
 * Email verification
 * Websocket for push notifications
 * Make front-end look really good with Semantic UI framework

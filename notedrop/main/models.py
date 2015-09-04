@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField(Course)
-    schools = models.ManyToManyField(School)
+    courses = models.ManyToManyField('Course')
+    schools = models.ManyToManyField('School')
     discipline = models.CharField(max_length=50, null=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -14,8 +14,8 @@ class UserProfile(models.Model):
 
 
 class Course(models.Model):
-    school = models.ForeignKey(School)
-    designator = models.CharField(min_length=3, max_length=3)
+    school = models.ForeignKey('School')
+    designator = models.CharField(max_length=3)
     number = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=8, blank=True, null=True)
@@ -35,13 +35,13 @@ class School(models.Model):
 
 
 class Post(models.Model):
-    author = models.foreignKey(User)
-    course = models.ForeignKey(Course)
+    author = models.ForeignKey(User)
+    course = models.ForeignKey('Course')
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
-    upvote_count = model.PositiveSmallIntegerField(default=0)
-    downvote_count = model.PositiveSmallIntegerField(default=0)
+    upvote_count = models.PositiveSmallIntegerField(default=0)
+    downvote_count = models.PositiveSmallIntegerField(default=0)
     # TODO add field for uploaded media (docs, pictures, etc.)
 
     def __unicode__(self):
