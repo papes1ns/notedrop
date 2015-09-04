@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} {1}".format(self.user.first_name, self.user.last_name)
+        return '{0} {1}'.format(self.user.first_name, self.user.last_name)
 
 
 class Course(models.Model):
@@ -23,7 +23,7 @@ class Course(models.Model):
     section = models.CharField(max_length=8, blank=True, null=True)
 
     def __unicode__(self):
-        return "{0} {1} {2}".format(self.designator, self.number, self.name)
+        return '{0} {1} {2}'.format(self.designator, self.number, self.name)
 
 
 class School(models.Model):
