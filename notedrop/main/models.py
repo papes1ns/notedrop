@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField('Course', db_tabl='enrolled_course')
-    schools = models.ManyToManyField('School', db_table='current_schools')
+    courses = models.ManyToManyField('Course', db_table='enrolled_courses')
+    schools = models.ManyToManyField('School', db_table='enrolled_schools')
     
     discipline = models.CharField(max_length=50, null=True)
     modified = models.DateTimeField(auto_now=True)
@@ -18,7 +18,7 @@ class Course(models.Model):
     school = models.ForeignKey('School')
     
     designator = models.CharField(max_length=3)
-    number = models.PositiveSmallIntegerField(max_length=3)
+    number = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=8, blank=True, null=True)
 
@@ -56,9 +56,10 @@ class PostData(models.Model):
     post = models.ForeignKey('Post')
     user = models.ForeignKey(User)
     
-    upvote = models.BooleanField(null=True)
-    downvote = models.BooleanField(null=True)
-    noted = models.BooleanField(null=True)
+    upvote = models.BooleanField(default=False)
+    downvote = models.BooleanField(default=False)
+    noted = models.BooleanField(default=False)
+    modified = models.DateTimeField(auto_now=True)
 
 # property to get related UserProfile from a User
 User.profile = property(lambda user_id: UserProfile.objects.get_or_create(
