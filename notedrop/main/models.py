@@ -39,7 +39,7 @@ class Post(models.Model):
     course = models.ForeignKey(Course)
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    archived = models.BooleanField()
+    archived = models.BooleanField(default=False)
     upvote_count = model.PositiveSmallIntegerField(default=0)
     downvote_count = model.PositiveSmallIntegerField(default=0)
     # TODO add field for uploaded media (docs, pictures, etc.)
