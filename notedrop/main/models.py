@@ -6,8 +6,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     courses = models.ManyToManyField('Course', db_table='enrolled_courses')
     schools = models.ManyToManyField('School', db_table='enrolled_schools')
-    
-    discipline = models.CharField(max_length=50, null=True)
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
@@ -16,7 +14,7 @@ class UserProfile(models.Model):
 
 class Course(models.Model):
     school = models.ForeignKey('School')
-    
+
     designator = models.CharField(max_length=3)
     number = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=50)
@@ -39,7 +37,7 @@ class School(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(User)
     course = models.ForeignKey('Course')
-    
+
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
@@ -50,12 +48,12 @@ class Post(models.Model):
             return "{0}..".format(self.content[:30])
         else:
             return self.content
-            
-            
+
+
 class PostData(models.Model):
     post = models.ForeignKey('Post')
     user = models.ForeignKey(User)
-    
+
     upvote = models.BooleanField(default=False)
     downvote = models.BooleanField(default=False)
     noted = models.BooleanField(default=False)

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<script>
+  $(document).ready(function(){
+    $('#search').keyup(function(){
+      $.post({% url 'search' %}, {
+            'q': $(this).val(),
+            'csrfmiddlewaretoken': '{{ csrf_token }}'  //must pass token
+            }, function(data) {
+        console.log(data);
+      });
+    })
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+  <input id='search' type='text' placeholder='Search'/>
+{% endblock %}

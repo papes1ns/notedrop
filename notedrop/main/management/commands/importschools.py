@@ -12,14 +12,15 @@ def buffer_states_from_csv(filename='data/states.csv'):
             states[row[1]] = row[0]
         states_csv.close()
     return states
-            
+
+
 class Command(BaseCommand):
     help = 'Import Schools'
     created_count = 0
-    
+
     def handle(self, *args, **options):
         states = buffer_states_from_csv()
-        
+
         with open('data/colleges.csv') as colleges_csv:
             next(colleges_csv, None)  # skip the header line
             cursor = csv.reader(colleges_csv)
