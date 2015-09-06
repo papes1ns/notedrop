@@ -60,5 +60,4 @@ class PostData(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
 # property to get related UserProfile from a User
-User.profile = property(lambda user_id: UserProfile.objects.get_or_create(
-                                                            user=user_id)[0])
+User.profile = property(lambda user_id: UserProfile.objects.get_or_create(user=user_id)[0])

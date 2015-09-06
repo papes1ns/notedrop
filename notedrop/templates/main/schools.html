@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}School Selection{% endblock %}
+
+{% block content %}
+
+  <table>
+  {% for school in schools %}
+  <tr>
+    <td><a href='#'>Follow</a></td>
+    <td>{{ school.name }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+
+{% endblock %}
