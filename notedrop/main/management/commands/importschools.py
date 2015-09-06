@@ -25,8 +25,9 @@ class Command(BaseCommand):
             next(colleges_csv, None)  # skip the header line
             cursor = csv.reader(colleges_csv)
             for row in cursor:
+                name = row[0].replace('&', 'and').replace('\'', '').replace('-', ' ')
                 obj, created = School.objects.get_or_create(
-                    name=row[0],
+                    name=name,
                     city=row[1],
                     state=states[row[2]]
                 )

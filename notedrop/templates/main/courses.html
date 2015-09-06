@@ -1,7 +1,35 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Course{% endblock %}
+{% block title %}Course Selection{% endblock %}
 
 {% block content %}
-<p>HI</p>
+<h1>Select the course you wish to follow</h1>
+
+<table>
+{% for course in courses %}
+  <tr>
+    <td>{{ course }}</td>
+    <td><button id='follow-btn' value='{{ course.pk }}'>Follow</button></td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}
+
+{% block extra_head %}
+<script>
+$(document).ready(function(){
+
+  $('#follow-btn').click(function(){
+    $.post('{% url 'post_course' %}', {'course_pk': $(this).val()})
+      .success(function(data){
+        alert(data);
+      })
+      .fail(function(date){
+        alert(data);
+      });
+
+  });
+
+});
+</script>
 {% endblock %}

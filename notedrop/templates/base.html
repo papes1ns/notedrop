@@ -1,11 +1,11 @@
 {% load staticfiles %}
-
 <html>
 <head>
   <title>{% block title %}Notedrop{% endblock %}</title>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href={% static "css/global.css" %}>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <link rel='stylesheet' type='text/css' href='{% static 'css/global.css' %}'>
+  <script src='//code.jquery.com/jquery-1.11.3.min.js'></script>
+  <script src='{% static 'js/csrf_ajax_setup.js' %}'></script>
   {% block extra_head %}{% endblock %}
 </head>
 <body>
