@@ -4,6 +4,14 @@
 
 {% block content %}
 
+{% if designator and school %}
+  <h1>Add {{ designator }} course for {{ school.name }}</h1>
+{% elif school %}
+  <h1>Add course for {{ school.name }}</h1>
+{% else %}
+  <h1>Add course</h1>
+{% endif %}
+
 <form action='{% url 'course_form' %}' method='post'>
   {% csrf_token %}
   <table>

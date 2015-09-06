@@ -14,7 +14,7 @@
 {% endfor %}
 </table>
 
-<h2>If you do not see your course <a href='{% url 'course_form' %}?designator={{ designator }}'>add a new one?</a>
+<h2>If you do not see your course <a href='{% url 'course_form' %}?school={{ school.name|slugify }}&designator={{ designator }}'>add a new one?</a>
 
 {% endblock %}
 

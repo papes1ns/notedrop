@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import slugify
+from django.forms import widgets
 
 from .models import School, Course
 from .forms import CourseForm
@@ -19,6 +20,8 @@ def feed(request):
 @login_required
 def select_course(request, state=None, school=None, designator=None):
     if designator and school and state:
+        school_str = school.replace('-', ' ')
+        school = School.objects.filter(name__icontains=school_str)[0]
         courses = Course.objects.filter(designator__icontains=designator)
         return render(request, 'main/courses.html', {
             'courses': courses,
@@ -56,18 +59,33 @@ def post_course(request):
 
 @login_required
 def course_form(request):
+    context = {}
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
             course = form.save(commit=False)
-            course.school = school
             course.save()
             request.user.profile.courses.add(course)
             request.user.profile.schools.add(course.school)
             return redirect('feed')
         else:
-            return render(request, 'main/course_form.html', {'form': form})
+            context['form'] = form
+            return render(request, 'main/course_form.html', context)
+
     form = CourseForm()
+    if 'school' in request.GET:
+        school_str = request.GET['school'].replace('-', ' ')
+        school = School.objects.filter(name__icontains=school_str)
+        if school:
+            school = school[0]
+            form.fields['school'].widget = widgets.HiddenInput()
+            form.fields['school'].initial = school
+            context['school'] = school
+
     if 'designator' in request.GET:
-        form.fields['designator'].initial = request.GET['designator']
-    return render(request, 'main/course_form.html', {'form': form})
+        designator = request.GET['designator'].upper()
+        form.fields['designator'].initial = designator
+        context['designator'] = designator
+
+    context['form'] = form
+    return render(request, 'main/course_form.html', context)
