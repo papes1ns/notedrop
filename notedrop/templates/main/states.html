@@ -3,10 +3,17 @@
 {% block title %}State Selection{% endblock %}
 
 {% block content %}
+  <h1>Select the State in which your School is in</h1>
 
-  <ul>
-  {% for state in states %}
-    <li><a href='{% url 'school-selection' state %}'>{{ state }}</a></li>
-  {% endfor %}
-  <ul>
+  <table>
+    <tr>
+    {% for state in states %}
+      <td><a href='{% url 'school_selection' state=state %}'>{{ state }}</a></td>
+    {% if forloop.counter|divisibleby:5 %}
+      </tr>
+      <tr>
+    {% endif %}
+    {% endfor %}
+    </tr>
+  </table>
 {% endblock %}

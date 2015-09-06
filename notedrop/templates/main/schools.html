@@ -3,12 +3,12 @@
 {% block title %}School Selection{% endblock %}
 
 {% block content %}
+<h1>Select the School in which your Course is in</h1>
 
   <table>
   {% for school in schools %}
   <tr>
-    <td><a href='#'>Follow</a></td>
-    <td>{{ school.name }}</td>
+    <td><a href='{% url 'course_selection' state=school.state school=school.name %}'>{{ school.name }}</a></td>
   </tr>
   {% endfor %}
   </table>

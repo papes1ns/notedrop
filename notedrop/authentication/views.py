@@ -13,7 +13,7 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     if request.user.profile.courses.count() == 0:
-                        return redirect('state-selection')
+                        return redirect('state_selection')
                     return redirect('feed')
                 else:
                     return render(request, 'authentication/login.html', {'form': form})

@@ -10,3 +10,7 @@ a {
 ul {
   list-style-type: none;
 }
+h1 {
+  color: rgb(255, 145, 0);
+  font-size: 26px;
+}

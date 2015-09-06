@@ -12,7 +12,11 @@ def feed(request):
 
 
 @login_required
-def school_selection(request, state=None):
+def add_course(request, state=None, school=None):
+    if school:
+        courses = []
+        return render(request, 'main/courses.html', {'courses': courses})
+
     if state:
         schools = School.objects.filter(state=state).order_by('name')
         return render(request, 'main/schools.html', {'schools': schools})
