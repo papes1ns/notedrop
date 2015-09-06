@@ -4,13 +4,16 @@
 
 {% block content %}
 
-<p>{{ login_error }}</p>
-
-<form method='POST' action='{% url 'login' %}'>
+<h1>Welcome to Notedrop</h1>
+<h2>Please login to use the site</h2>
+<form method='POST' action='{% url 'login' %}?next={{ next }}'>
   {% csrf_token %}
   <table>
     {{ form.as_table }}
   </table>
   <input type='submit' value='login'/>
 </form>
+
+<h2>Not a member <a href={% url 'signup' %}>Signup</a></h2>
+
 {% endblock %}

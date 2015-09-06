@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm
 
-
 def login_user(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -14,17 +13,18 @@ def login_user(request):
                     login(request, user)
                     if request.user.profile.courses.count() == 0:
                         return redirect('state_selection')
-                    return redirect('feed')
-                else:
-                    return render(request, 'authentication/login.html', {'form': form})
-            else:
-                return render(request,'authentication/login.html', {'form': form})
+                    r = request.GET.get('next', None) or '/'
+                    return redirect(r)
+
     form = LoginForm()
-    return render(request, 'authentication/login.html', {'form': form})
+    return render(request, 'authentication/login.html', {
+        'form': form,
+        'next': request.GET.get('next', None) or '/'
+    })
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('feed')
 
 def signup(request):
     if request.method == 'POST':

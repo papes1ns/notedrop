@@ -21,12 +21,15 @@ class CourseForm(forms.ModelForm):
         return designator
 
     def clean_number(self):
-        number = str(self.cleaned_data['number'])
-        if len(number) < 3:
-            raise forms.ValidationError(
-                'Ensure this value has 3 characters.',
-                code='ValueLengthError'
-            )
+        number = self.cleaned_data['number']
+
+        if number / 100 >= 1:
+            number = str(number)
+        elif number / 10 >= 1:
+            number = '0' + str(number)
+        else:
+            number = '00' + str(number)
+
         return number
 
     def clean_name(self):
