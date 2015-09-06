@@ -9,7 +9,7 @@ from .models import (
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('modified',)
+    list_display = ('user', 'modified',)
     list_filter = ('courses',)
 
 admin.site.register(UserProfile, UserProfileAdmin)

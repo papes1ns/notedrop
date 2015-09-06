@@ -16,7 +16,7 @@ class Course(models.Model):
     school = models.ForeignKey('School')
 
     designator = models.CharField(max_length=3)
-    number = models.PositiveSmallIntegerField()
+    number = models.CharField(max_length=3)
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=8, blank=True, null=True)
 

@@ -10,7 +10,25 @@ a {
 ul {
   list-style-type: none;
 }
+ul > li {
+  font-size: 16px;
+}
 h1 {
   color: rgb(255, 145, 0);
   font-size: 26px;
+}
+h2 {
+  color:rgb(130, 34, 252);
+  font-size: 20px;
+}
+label {
+    color: rgb(0, 157, 167);
+}
+input {
+  background-color: rgb(255, 255, 255);
+  color: rgb(53, 24, 112);
+  font-size: 18px;
+}
+.errorlist > li{
+  color: rgb(207, 31, 0);
 }
