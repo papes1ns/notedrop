@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm
 
 def login_user(request):
+    context = {}
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -17,22 +18,24 @@ def login_user(request):
                     return redirect(r)
 
     form = LoginForm()
-    return render(request, 'authentication/login.html', {
-        'form': form,
-        'next': request.GET.get('next', None) or '/'
-    })
+    context['form'] = form
+    context['next'] = request.GET.get('next', None) or '/'
+    return render(request, 'authentication/login.html', context)
 
 def logout_user(request):
     logout(request)
     return redirect('feed')
 
 def signup(request):
+    context = {}
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('enroll')
         else:
-            return render(request, 'authentication/signup.html', {'form': form})
+            context['form'] = form
+            return render(request, 'authentication/signup.html', context)
     form = UserCreationForm()
-    return render(request, 'authentication/signup.html', {'form': form})
+    context['form'] = form
+    return render(request, 'authentication/signup.html', context)

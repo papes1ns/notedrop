@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ request.user }}'s' Profile{% endblock %}
+
+{% block content %}
+<h1>{{ request.user }}'s Profile</h1>
+
+<h2>You are {{ user }}</h2>
+<a href={% url 'logout' %}>Logout</a>
+
+<h2>Here are the courses you are following</h2>
+<table>
+  {% for course in courses %}
+  <tr>
+    <td>{{ course }}</td>
+    <td><button class='course-handler' value='{{ course.pk }}'>Unfollow</button></tds>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href={% url 'state_selection' %}>Add another course</a>
+
+<h2>Here are the schools your enrolled in</h2>
+<ul id='school-list'>
+{% for school in schools %}
+  <li>{{ school }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
+
+{% block extra_head %}
+<script>
+$(document).ready(function(){
+
+  $('.course-handler').click(function(){
+    var clickedButton = $(this);
+    $.post('{% url 'profile' %}', {'course_pk': $(this).val(), 'action': $(this).text()})
+      .success(function(data){
+        flip_button_action(clickedButton)
+        reload_schools($('#school-list'), data);
+      })
+      .fail(function(date){
+        console.log(data);
+      });
+
+  });
+});
+
+function reload_schools(school_list, data){
+  school_list.empty();
+  data = eval(data);
+  for(var i=0; i < data.length; i++){
+    school_list.append('<li>' + data[i]['fields']['name'] + '</li>');
+  }
+}
+
+function flip_button_action(btn){
+  if(btn.text() == 'Unfollow'){
+    btn.text('Follow');
+  }
+  else {
+    btn.text('Unfollow');
+  }
+}
+</script>
+{% endblock %}

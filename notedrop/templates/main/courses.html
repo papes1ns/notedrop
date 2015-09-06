@@ -9,7 +9,7 @@
 {% for course in courses %}
   <tr>
     <td>{{ course }}</td>
-    <td><button id='follow-btn' value='{{ course.pk }}'>Follow</button></td>
+    <td><button id='course-handler' value='{{ course.pk }}'>Follow</button></td>
   </tr>
 {% endfor %}
 </table>
@@ -22,7 +22,7 @@
 <script>
 $(document).ready(function(){
 
-  $('#follow-btn').click(function(){
+  $('#course-handler').click(function(){
     $.post('{% url 'post_course' %}', {'course_pk': $(this).val()})
       .success(function(data){
         alert(data);

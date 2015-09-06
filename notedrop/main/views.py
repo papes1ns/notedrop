@@ -1,5 +1,4 @@
-import json
-
+from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -13,39 +12,58 @@ from .forms import CourseForm
 def feed(request):
     return render(request, 'main/feed.html', {
         'user': request.user,
-        'schools': request.user.profile.schools.all(),
         'courses': request.user.profile.courses.all()
     })
 
+
+@login_required
+def profile(request):
+    context = {}
+    if request.is_ajax():
+        course = Course.objects.get(pk=request.POST['course_pk'])
+        if request.POST['action'] == 'Unfollow':
+            request.user.profile.courses.remove(course)
+        else:
+            request.user.profile.courses.add(course)
+        schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
+        data = serializers.serialize('json', schools, fields=('name',))
+        return HttpResponse(data)
+
+    schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
+    context['schools'] = schools
+    courses = request.user.profile.courses.all()
+    context['courses'] = courses
+    return render(request, 'main/profile.html', context)
+
 @login_required
 def select_course(request, state=None, school=None, designator=None):
+    context = {}
     if designator and school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
         courses = Course.objects.filter(designator__icontains=designator)
-        return render(request, 'main/courses.html', {
-            'courses': courses,
-            'school': school,
-            'designator': designator
-        })
+        context['courses'] = courses
+        context['school'] = school
+        context['designator'] = designator
+        return render(request, 'main/courses.html', context)
 
     if school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
-        designators = Course.objects.filter(school=school).values_list('designator', flat=True).distinct().order_by('designator')
-
-        return render(request, 'main/designators.html', {
-            'designators': designators,
-            'school': school
-        })
+        designators = Course.objects.filter(school=school).values_list('designator').distinct().order_by('designator')
+        context['school'] = school
+        context['designators'] = designators
+        return render(request, 'main/designators.html', context)
 
     if state:
         state_str = state.replace('-', ' ')
         schools = School.objects.filter(state__icontains=state_str).order_by('name')
-        return render(request, 'main/schools.html', {'schools': schools})
+        context['schools'] = schools
+        return render(request, 'main/schools.html', context)
 
     states = School.objects.values_list('state', flat=True).distinct().order_by('state')
-    return render(request, 'main/states.html', {'states': states})
+    context['states'] = states
+    return render(request, 'main/states.html', context)
 
 @login_required
 def post_course(request):
@@ -54,8 +72,8 @@ def post_course(request):
         course = Course.objects.get(pk=course_pk)
         request.user.profile.courses.add(course)
         request.user.profile.schools.add(course.school)
-        return HttpResponse('GOOD')
-    return HttpResponseBadRequest('BAD')
+        return HttpResponse('success')
+    return HttpResponseBadRequest('error')
 
 @login_required
 def course_form(request):
@@ -66,7 +84,6 @@ def course_form(request):
             course = form.save(commit=False)
             course.save()
             request.user.profile.courses.add(course)
-            request.user.profile.schools.add(course.school)
             return redirect('feed')
         else:
             context['form'] = form

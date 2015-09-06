@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     courses = models.ManyToManyField('Course', db_table='enrolled_courses')
-    schools = models.ManyToManyField('School', db_table='enrolled_schools')
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
