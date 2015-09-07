@@ -6,7 +6,7 @@ from .models import Course, UserProfile
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ('school', 'designator', 'number', 'name', 'section')
+        fields = ('school', 'designator', 'number', 'name',)
 
     number = forms.IntegerField(min_value=1, max_value=999)
 

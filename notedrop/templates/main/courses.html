@@ -6,10 +6,10 @@
 <h1>Select the course you wish to follow</h1>
 
 <table>
-{% for course in courses %}
+{% for course_user in courses_users %}
   <tr>
-    <td>{{ course }}</td>
-    <td><button id='course-handler' value='{{ course.pk }}'>Follow</button></td>
+    <td>{{ course_user.0 }} ({{ course_user.1 }} users)</td>
+    <td><button class='course-handler' value='{{ course_user.0.pk }}'>Follow</button></td>
   </tr>
 {% endfor %}
 </table>
@@ -22,17 +22,26 @@
 <script>
 $(document).ready(function(){
 
-  $('#course-handler').click(function(){
-    $.post('{% url 'post_course' %}', {'course_pk': $(this).val()})
+  $('.course-handler').click(function(){
+    var clickedButton = $(this);
+    $.post('{% url 'post_course' %}', {'course_pk': $(this).val(), 'action': $(this).text()})
       .success(function(data){
-        alert(data);
+        flip_button_action(clickedButton)
       })
       .fail(function(date){
-        alert(data);
+        console.log(data);
       });
 
   });
-
 });
+
+function flip_button_action(btn){
+  if(btn.text() == 'Unfollow'){
+    btn.text('Follow');
+  }
+  else {
+    btn.text('Unfollow');
+  }
+}
 </script>
 {% endblock %}

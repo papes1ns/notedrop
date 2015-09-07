@@ -5,7 +5,6 @@
 {% block content %}
 <h1>{{ request.user }}'s Profile</h1>
 
-<h2>You are {{ user }}</h2>
 <a href={% url 'logout' %}>Logout</a>
 
 <h2>Here are the courses you are following</h2>
@@ -23,7 +22,7 @@
 <h2>Here are the schools your enrolled in</h2>
 <ul id='school-list'>
 {% for school in schools %}
-  <li>{{ school }}</li>
+  <li>{{ school.name }} - {{ school.city }}, {{ school.state }}</li>
 {% endfor %}
 </ul>
 {% endblock %}
@@ -50,7 +49,7 @@ function reload_schools(school_list, data){
   school_list.empty();
   data = eval(data);
   for(var i=0; i < data.length; i++){
-    school_list.append('<li>' + data[i]['fields']['name'] + '</li>');
+    school_list.append('<li>' + data[i]['fields']['name'] + ' - ' + data[i]['fields']['city'] + ', ' + data[i]['fields']['state'] + '</li>');
   }
 }
 

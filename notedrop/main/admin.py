@@ -16,7 +16,7 @@ admin.site.register(UserProfile, UserProfileAdmin)
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('school', 'designator', 'number', 'section')
+    list_display = ('school', 'designator', 'number',)
     list_filter = ('school', 'designator')
 
 admin.site.register(Course, CourseAdmin)

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import slugify
 from django.forms import widgets
 
-from .models import School, Course
+from .models import School, Course, UserProfile
 from .forms import CourseForm
 
 @login_required
@@ -26,7 +26,7 @@ def profile(request):
         else:
             request.user.profile.courses.add(course)
         schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
-        data = serializers.serialize('json', schools, fields=('name',))
+        data = serializers.serialize('json', schools, fields=('name','state', 'city',))
         return HttpResponse(data)
 
     schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
@@ -41,8 +41,14 @@ def select_course(request, state=None, school=None, designator=None):
     if designator and school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
+
+        # need to exclude the courses the user is already following
         courses = Course.objects.filter(designator__icontains=designator)
-        context['courses'] = courses
+        courses_users = []
+        for c in courses:
+            courses_users.append([c, UserProfile.objects.filter(courses=c).count()])
+
+        context['courses_users'] = courses_users
         context['school'] = school
         context['designator'] = designator
         return render(request, 'main/courses.html', context)
@@ -50,7 +56,7 @@ def select_course(request, state=None, school=None, designator=None):
     if school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
-        designators = Course.objects.filter(school=school).values_list('designator').distinct().order_by('designator')
+        designators = Course.objects.filter(school=school).values_list('designator', flat=True).distinct().order_by('designator')
         context['school'] = school
         context['designators'] = designators
         return render(request, 'main/designators.html', context)
@@ -67,11 +73,13 @@ def select_course(request, state=None, school=None, designator=None):
 
 @login_required
 def post_course(request):
+    # would rather have this form be a form post
     if request.is_ajax():
-        course_pk = request.POST['course_pk']
-        course = Course.objects.get(pk=course_pk)
-        request.user.profile.courses.add(course)
-        request.user.profile.schools.add(course.school)
+        course = Course.objects.get(pk=request.POST['course_pk'])
+        if request.POST['action'] == 'Unfollow':
+            request.user.profile.courses.remove(course)
+        else:
+            request.user.profile.courses.add(course)
         return HttpResponse('success')
     return HttpResponseBadRequest('error')
 

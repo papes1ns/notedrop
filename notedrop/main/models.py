@@ -17,7 +17,6 @@ class Course(models.Model):
     designator = models.CharField(max_length=3)
     number = models.CharField(max_length=3)
     name = models.CharField(max_length=50)
-    section = models.CharField(max_length=8, blank=True, null=True)
 
     def __unicode__(self):
         return '{0} {1} {2}'.format(self.designator, self.number, self.name)
