@@ -32,17 +32,17 @@
 <div class='post'>
 
   <div class='post-info'>
-    <span class='post-course'>{{ post.course }}</span>
-    <span class='post-author'><a href='{{ post.author.username }}'>{{ post.author }}</a></span>
-    <p class='post-content'>{{ post }}</p>
-    <span class='post-created'>Created {{ post.created }}</span>
+    <span class='post-course'>{{ post.obj.course }}</span>
+    <span class='post-author'><a href='{{ post.author.username }}'>{{ post.obj.author }}</a></span>
+    <p class='post-content'>{{ post.obj }}</p>
+    <span class='post-created'>Created {{ post.obj.created }}</span>
   </div>
 
   <div class='post-options'>
-    <button class='post-options-btn'>&#9733;</button>
-    <button class='post-options-btn' value='up-{{ post.pk }}'>&#9650;</button>
-    <span class='post-rating'>0</span>
-    <button class='post-options-btn' value='down-{{ post.pk }}'>&#9660;</button>
+    <button class='post-options-btn' value='{{ post.noted }}'>&#9733;</button>
+    <button class='post-options-btn' value='up-{{ post.obj.pk }}'>&#9650;</button>
+    <span class='post-rating'>{{ post.obj.rating }}</span>
+    <button class='post-options-btn' value='down-{{ post.obj.pk }}'>&#9660;</button>
   </div>
 
 </div>

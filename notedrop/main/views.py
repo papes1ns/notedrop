@@ -4,15 +4,24 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.forms import widgets
 
-from .models import School, Course, UserProfile, Post
+from .models import School, Course, UserProfile, Post, PostData
 from .forms import CourseForm, PostForm
 
 @login_required
 def feed(request):
     context = {}
     context['courses'] = request.user.profile.courses.all()
-    context['posts'] = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
+    posts = []
+    for p in Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'):
+        post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
+        posts.append({
+            'obj': p,
+            'noted': post_data.noted,
+            'upvote': post_data.upvote,
+            'downvote': post_data.downvote
+        })
 
+    context['posts'] = posts
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():

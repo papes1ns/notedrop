@@ -48,16 +48,33 @@ class Post(models.Model):
         else:
             return self.content
 
+    @property
+    def rating(self):
+        count = 0
+        for p in PostData.objects.filter(post=self):
+            if p.upvote is True:
+                count += 1
+            elif p.downvote is True:
+                count -= 1
+        return count
 
 class PostData(models.Model):
     # TODO rename this to NoteData
     post = models.ForeignKey('Post')
     user = models.ForeignKey(User)
 
-    upvote = models.BooleanField(default=False)
-    downvote = models.BooleanField(default=False)
-    noted = models.BooleanField(default=False)
+    upvote = models.NullBooleanField(default=False)
+    downvote = models.NullBooleanField(default=False)
+    noted = models.NullBooleanField(default=False)
     modified = models.DateTimeField(auto_now=True)
+
+    def upvote(self):
+        self.upvote = True
+        self.downvote = False
+
+    def downvote(self):
+        self.downvote = True
+        self.upvote = False
 
 # property to get related UserProfile from a User
 User.profile = property(lambda user_id: UserProfile.objects.get_or_create(user=user_id)[0])
