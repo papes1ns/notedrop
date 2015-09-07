@@ -17,7 +17,7 @@
 
 <a href={% url 'state_selection' %}>Add another course</a>
 
-<h2>Here are the schools your enrolled in</h2>
+<h2>Here are the schools of the courses you're following</h2>
 <ul id='school-list'>
 {% for school in schools %}
   <li>{{ school.name }} - {{ school.city }}, {{ school.state }}</li>

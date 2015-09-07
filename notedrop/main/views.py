@@ -30,7 +30,7 @@ def feed(request):
     return render(request, 'main/feed.html', context)
 
 @login_required
-def profile(request):
+def profile(request, username=None):
     context = {}
     if request.is_ajax():
         course = Course.objects.get(pk=request.POST['course_pk'])

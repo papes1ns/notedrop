@@ -35,6 +35,10 @@ input {
 .nav-links > li {
   display: inline;
 }
+.submit-note {
+  margin-left: 20px;
+  margin-top: 10px;
+}
 .sidebar {
   float: left;
   marigin-right: 20px;
@@ -66,7 +70,7 @@ input {
   margin-top: 15px;
   padding-bottom: 15px;
   float: left;
-  width: 500px;
+  width: 600px;
   border-bottom: 1px solid rgb(0, 158, 200);
 }
 .post-course {

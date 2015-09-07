@@ -10,11 +10,13 @@
 </head>
 <body>
 {% block navigation %}
-<ul class='nav-links'>
-  <li><a href='{% url 'feed' %}'>Feed</a></li>
-  <li><a href='{% url 'profile' %}'>Profile</a></li>
-  <li><a href='{% url 'logout' %}'>Logout</a></li>
-</ul>
+<nav>
+  <ul class='nav-links'>
+    <li><a href='{% url 'feed' %}'>Feed</a></li>
+    <li><a href='{% url 'profile' %}'>Profile</a></li>
+    <li><a href='{% url 'logout' %}'>Logout</a></li>
+  </ul>
+</nav>
 {% endblock %}
 {% block content %}{% endblock %}
 </body>

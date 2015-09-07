@@ -33,6 +33,7 @@ class School(models.Model):
 
 
 class Post(models.Model):
+    # TODO rename this to Note
     author = models.ForeignKey(User)
     course = models.ForeignKey('Course')
 
@@ -43,12 +44,13 @@ class Post(models.Model):
 
     def __unicode__(self):
         if len(self.content) > 30:
-            return "{0}..".format(self.content[:30])
+            return "{0}..".format(self.content[:500])
         else:
             return self.content
 
 
 class PostData(models.Model):
+    # TODO rename this to NoteData
     post = models.ForeignKey('Post')
     user = models.ForeignKey(User)
 
