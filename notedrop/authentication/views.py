@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+
 from .forms import LoginForm
+
 
 def login_user(request):
     context = {}
@@ -17,8 +19,7 @@ def login_user(request):
                     r = request.GET.get('next', None) or '/'
                     return redirect(r)
 
-    form = LoginForm()
-    context['form'] = form
+    context['form'] =  LoginForm()
     context['next'] = request.GET.get('next', None) or '/'
     return render(request, 'authentication/login.html', context)
 
@@ -36,6 +37,6 @@ def signup(request):
         else:
             context['form'] = form
             return render(request, 'authentication/signup.html', context)
-    form = UserCreationForm()
-    context['form'] = form
+            
+    context['form'] = UserCreationForm()
     return render(request, 'authentication/signup.html', context)

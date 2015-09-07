@@ -14,4 +14,23 @@
 
 <a href={% url 'state_selection' %}>Add another course</a>
 
+<h2>Drop a Note</h2>
+<form action='{% url 'feed' %}' method='post'>
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type='submit' value='Submit Post'/>
+</form>
+
+<h2>Note Feed</h2>
+{% for post in posts %}
+<div class='post'>
+  <span class='post-author'>{{ post.author }}</span>
+  <span class='post-course'>{{ post.course }}</span>
+  <p class='post-content'>{{ post }}</p>
+  <span class='post-created'>Created {{ post.created }}</span>
+</div>
+{% endfor %}
+
 {% endblock %}

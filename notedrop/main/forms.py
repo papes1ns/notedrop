@@ -1,7 +1,12 @@
 from django import forms
 
-from .models import Course, UserProfile
+from .models import Course, UserProfile, Post
 
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('course', 'content',)
 
 class CourseForm(forms.ModelForm):
     class Meta:

@@ -2,19 +2,32 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.template.defaultfilters import slugify
 from django.forms import widgets
 
-from .models import School, Course, UserProfile
-from .forms import CourseForm
+from .models import School, Course, UserProfile, Post
+from .forms import CourseForm, PostForm
 
 @login_required
 def feed(request):
-    return render(request, 'main/feed.html', {
-        'user': request.user,
-        'courses': request.user.profile.courses.all()
-    })
+    context = {}
+    context['courses'] = request.user.profile.courses.all()
+    context['posts'] = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all())
 
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('feed')
+        else:
+            context['form'] = form
+            return render(request, 'main/feed.html', context)
+
+    form = PostForm()
+    form.fields['course'].queryset = request.user.profile.courses.all()
+    context['form'] = form
+    return render(request, 'main/feed.html', context)
 
 @login_required
 def profile(request):
@@ -29,10 +42,8 @@ def profile(request):
         data = serializers.serialize('json', schools, fields=('name','state', 'city',))
         return HttpResponse(data)
 
-    schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
-    context['schools'] = schools
-    courses = request.user.profile.courses.all()
-    context['courses'] = courses
+    context['schools'] = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
+    context['courses'] = request.user.profile.courses.all()
     return render(request, 'main/profile.html', context)
 
 @login_required
@@ -40,23 +51,21 @@ def select_course(request, state=None, school=None, designator=None):
     context = {}
     if designator and school and state:
         school_str = school.replace('-', ' ')
-        school = School.objects.filter(name__icontains=school_str)[0]
         courses = Course.objects.filter(designator__icontains=designator).exclude(userprofile__user=request.user)
         courses_users = []
         for c in courses:
             courses_users.append([c, UserProfile.objects.filter(courses=c).count()])
 
         context['courses_users'] = courses_users
-        context['school'] = school
+        context['school'] = school = School.objects.filter(name__icontains=school_str)[0]
         context['designator'] = designator
         return render(request, 'main/courses.html', context)
 
     if school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
-        designators = Course.objects.filter(school=school).values_list('designator', flat=True).distinct().order_by('designator')
         context['school'] = school
-        context['designators'] = designators
+        context['designators'] = Course.objects.filter(school=school).values_list('designator', flat=True).distinct().order_by('designator')
         return render(request, 'main/designators.html', context)
 
     if state:
@@ -65,13 +74,11 @@ def select_course(request, state=None, school=None, designator=None):
         context['schools'] = schools
         return render(request, 'main/schools.html', context)
 
-    states = School.objects.values_list('state', flat=True).distinct().order_by('state')
-    context['states'] = states
+    context['states'] = School.objects.values_list('state', flat=True).distinct().order_by('state')
     return render(request, 'main/states.html', context)
 
 @login_required
 def post_course(request):
-    # would rather have this form be a form post
     if request.is_ajax():
         course = Course.objects.get(pk=request.POST['course_pk'])
         if request.POST['action'] == 'Unfollow':
