@@ -32,7 +32,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('enroll')
+            return redirect('profile')
         else:
             context['form'] = form
             return render(request, 'authentication/signup.html', context)

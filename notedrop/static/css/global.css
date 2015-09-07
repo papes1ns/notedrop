@@ -32,3 +32,6 @@ input {
 .errorlist > li{
   color: rgb(207, 31, 0);
 }
+.nav-links > li {
+  display: inline;
+}

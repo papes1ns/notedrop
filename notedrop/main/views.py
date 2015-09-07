@@ -41,9 +41,7 @@ def select_course(request, state=None, school=None, designator=None):
     if designator and school and state:
         school_str = school.replace('-', ' ')
         school = School.objects.filter(name__icontains=school_str)[0]
-
-        # need to exclude the courses the user is already following
-        courses = Course.objects.filter(designator__icontains=designator)
+        courses = Course.objects.filter(designator__icontains=designator).exclude(userprofile__user=request.user)
         courses_users = []
         for c in courses:
             courses_users.append([c, UserProfile.objects.filter(courses=c).count()])

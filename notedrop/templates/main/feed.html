@@ -3,10 +3,7 @@
 {% block title %}Notedrop Feed{% endblock %}
 
 {% block content %}
-<h1>Welcome to Notedrop :)</h1>
-
-<h2>You are {{ user }}</h2>
-<a href={% url 'logout' %}>Logout</a>
+<h1>Welcome to Notedrop, {{ request.user }} :)</h1>
 
 <h2>Here are the courses you are following</h2>
 <ul>
