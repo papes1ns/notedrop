@@ -3,6 +3,7 @@
 {% block title %}Notedrop Feed{% endblock %}
 
 {% block content %}
+<div class='sidebar'>
 <h1>Welcome to Notedrop, {{ request.user }} :)</h1>
 
 <h2>Here are the courses you are following</h2>
@@ -22,15 +23,30 @@
   </table>
   <input type='submit' value='Submit Post'/>
 </form>
+</div>
+<!-- end of sidebar -->
 
+<div class='notefeed'>
 <h2>Note Feed</h2>
 {% for post in posts %}
 <div class='post'>
-  <span class='post-author'>{{ post.author }}</span>
-  <span class='post-course'>{{ post.course }}</span>
-  <p class='post-content'>{{ post }}</p>
-  <span class='post-created'>Created {{ post.created }}</span>
+
+  <div class='post-info'>
+    <span class='post-course'>{{ post.course }}</span>
+    <span class='post-author'><a href='{{ post.author.username }}'>{{ post.author }}</a></span>
+    <p class='post-content'>{{ post }}</p>
+    <span class='post-created'>Created {{ post.created }}</span>
+  </div>
+
+  <div class='post-options'>
+    <button class='post-options-btn'>✓</button>
+    <button class='post-options-btn' value='up-{{ post.pk }}'>▲</button>
+    <span class='post-rating'>0</span>
+    <button class='post-options-btn' value='down-{{ post.pk }}'>▼</button>
+  </div>
+
 </div>
 {% endfor %}
-
+</div>
+<!-- end of notefeed  -->
 {% endblock %}

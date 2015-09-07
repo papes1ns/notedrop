@@ -11,7 +11,7 @@ from .forms import CourseForm, PostForm
 def feed(request):
     context = {}
     context['courses'] = request.user.profile.courses.all()
-    context['posts'] = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all())
+    context['posts'] = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
 
     if request.method == 'POST':
         form = PostForm(request.POST)

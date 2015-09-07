@@ -35,3 +35,52 @@ input {
 .nav-links > li {
   display: inline;
 }
+.sidebar {
+  float: left;
+  marigin-right: 20px;
+}
+.notefeed {
+  float: right;
+  margin-right: 400px;
+}
+.post {
+  margin-top: 20px;
+}
+.post-options {
+  float: right;
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+.post-options-btn {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 22px;
+}
+.post-rating {
+  font-size: 18px;
+  padding-left: 5px;
+}
+.post-info {
+  margin-top: 15px;
+  padding-bottom: 15px;
+  float: left;
+  width: 500px;
+  border-bottom: 1px solid rgb(0, 158, 200);
+}
+.post-course {
+  font-size: 12px;
+  color: rgb(166, 2, 105);
+}
+.post-author {
+  float: right;
+}
+.post-content {
+  font-size: 20px;
+  padding-left: 10px;
+}
+.post-created {
+  font-size: 10px;
+  font-style: italic;
+}
