@@ -43,7 +43,7 @@ class Post(models.Model):
     # TODO add field for uploaded media (docs, pictures, etc.)
 
     def __unicode__(self):
-        if len(self.content) > 30:
+        if len(self.content) > 500:
             return "{0}..".format(self.content[:500])
         else:
             return self.content
