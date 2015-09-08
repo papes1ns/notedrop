@@ -1,10 +1,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from main.views import feed, select_course, post_course, course_form, profile, post_options
+from main.views import feed, select_course, post_course, course_form, profile, post_options, users
 from authentication.views import login_user, logout_user, signup
 
 urlpatterns = [
     url(r'^$', feed, name='feed'),
+    url(r'^feed/course/(?P<course_pk>[0-9]+)/$', feed, name='feed_course_filter'),
+    url(r'^users/(?P<username>[a-zA-Z0-9-@]+)/$', users, name='users'),
     url(r'^login/', login_user, name='login'),
     url(r'^logout/$', logout_user, name='logout'),
     url(r'^courses/$', select_course, name='state_selection'),

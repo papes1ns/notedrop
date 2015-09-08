@@ -6,10 +6,10 @@
 <div class='sidebar'>
 <h1>Welcome to Notedrop, {{ request.user }} :)</h1>
 
-<h2>Filter feed by course</h2>
+<h2>Filter feed by course <a href='{% url 'feed' %}'>Clear Filter</a></h2>
 <ul>
   {% for course in courses %}
-    <li>{{ course }}</li>
+    <li><a href='{% url 'feed_course_filter' course_pk=course.pk %}'>{{ course }}</a></li>
   {% endfor %}
 </ul>
 
@@ -33,7 +33,7 @@
 
   <div class='post-info'>
     <span class='post-course'>{{ post.obj.course }}</span>
-    <span class='post-author'><a href='{{ post.author.username }}'>{{ post.obj.author }}</a></span>
+    <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
     <p class='post-content'>{{ post.obj }}</p>
     <span class='post-created'>Created {{ post.obj.created }}</span>
   </div>

@@ -9,10 +9,19 @@ from .models import School, Course, UserProfile, Post, PostData
 from .forms import CourseForm, PostForm
 
 @login_required
-def feed(request):
+def feed(request, course_pk=None):
     context = {}
     posts = []
-    for p in Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'):
+    if course_pk:
+        course_pk = int(course_pk)
+        if any(c.pk == course_pk for c in request.user.profile.courses.all()):
+            q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
+        else:
+            q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
+    else:
+        q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
+        
+    for p in q:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
             'obj': p,
@@ -22,6 +31,7 @@ def feed(request):
 
     context['courses'] = request.user.profile.courses.all()
     context['posts'] = posts
+    
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -159,3 +169,15 @@ def post_options(request):
         return HttpResponse(json.dumps({'post_pk': post_data.post.pk, 'rating': post_data.post.rating, 'upvote': post_data.upvote}))
 
     return HttpResponseBadRequest()
+    
+@login_required
+def users(request, username=None):
+    context = {}
+    q = UserProfile.objects.get(user__username=username)
+    context['username'] = q.user.username
+    context['posts'] = Post.objects.filter(author=q.user)
+    context['courses'] = q.courses.all()
+    context['schools'] = School.objects.filter(pk__in=q.courses.all().values('school').distinct())
+    return render(request, 'main/users.html', context)
+    
+    

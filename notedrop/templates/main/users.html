@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ username }}'s info{% endblock %}
+
+{% block content %}
+
+<h2>Posts from this user</h2>
+<ul>
+  {% for post in posts %}
+  <li>{{ post }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Courses this user follows</h2>
+<ul>
+  {% for course in courses %}
+  <li>{{ course }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Schools of the courses this user follows</h2>
+<ul>
+  {% for school in schools %}
+  <li>{{ school }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
