@@ -16,6 +16,7 @@ def feed(request, course_pk=None):
         course_pk = int(course_pk)
         if any(c.pk == course_pk for c in request.user.profile.courses.all()):
             q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
+            context['filter_course'] = q[0].course.name
         else:
             q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
     else:
@@ -28,7 +29,7 @@ def feed(request, course_pk=None):
             'noted': post_data.noted,
             'upvote': post_data.upvote
         })
-
+        
     context['courses'] = request.user.profile.courses.all()
     context['posts'] = posts
     

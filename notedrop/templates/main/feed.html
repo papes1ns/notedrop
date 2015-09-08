@@ -9,7 +9,7 @@
 <h2>Filter feed by course <a href='{% url 'feed' %}'>Clear Filter</a></h2>
 <ul>
   {% for course in courses %}
-    <li><a href='{% url 'feed_course_filter' course_pk=course.pk %}'>{{ course }}</a></li>
+    <li><a href='{% url 'feed_course_filter' course_pk=course.pk %}' {% if filter_course == course.name %}style='color: rgb(166, 2, 105);'{% endif %}>{{ course }}</a></li>
   {% endfor %}
 </ul>
 
