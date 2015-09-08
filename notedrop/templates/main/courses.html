@@ -25,13 +25,9 @@ $(document).ready(function(){
   $('.course-handler').click(function(){
     var clickedButton = $(this);
     $.post('{% url 'post_course' %}', {'course_pk': $(this).val(), 'action': $(this).text()})
-      .success(function(data){
+      .done(function(data){
         flip_button_action(clickedButton)
-      })
-      .fail(function(date){
-        console.log(data);
       });
-
   });
 });
 

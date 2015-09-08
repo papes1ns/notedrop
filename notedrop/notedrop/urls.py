@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from main.views import feed, select_course, post_course, course_form, profile
+from main.views import feed, select_course, post_course, course_form, profile, post_options
 from authentication.views import login_user, logout_user, signup
 
 urlpatterns = [
@@ -12,8 +12,9 @@ urlpatterns = [
     url(r'^courses/(?P<state>[a-zA-Z- ]+)/(?P<school>[a-zA-Z- ]+)/$', select_course, name='designator_selection'),
     url(r'^courses/(?P<state>[a-zA-Z- ]+)/(?P<school>[a-zA-Z- ]+)/(?P<designator>[a-zA-Z]+)/$', select_course, name='course_selection'),
     url(r'^post-course/$', post_course, name='post_course'),
+    url(r'^post-options/', post_options, name='post_options'),
     url(r'^course-form/', course_form, name='course_form'),
-    url(r'^profile/', profile, name='profile'),
+    url(r'^profile/$', profile, name='profile'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^helm/', include(admin.site.urls)),
 ]

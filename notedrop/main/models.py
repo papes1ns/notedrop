@@ -54,7 +54,7 @@ class Post(models.Model):
         for p in PostData.objects.filter(post=self):
             if p.upvote is True:
                 count += 1
-            elif p.downvote is True:
+            elif p.upvote is False:
                 count -= 1
         return count
 
@@ -63,18 +63,9 @@ class PostData(models.Model):
     post = models.ForeignKey('Post')
     user = models.ForeignKey(User)
 
-    upvote = models.NullBooleanField(default=False)
-    downvote = models.NullBooleanField(default=False)
+    upvote = models.NullBooleanField(default=None)
     noted = models.NullBooleanField(default=False)
     modified = models.DateTimeField(auto_now=True)
-
-    def upvote(self):
-        self.upvote = True
-        self.downvote = False
-
-    def downvote(self):
-        self.downvote = True
-        self.upvote = False
 
 # property to get related UserProfile from a User
 User.profile = property(lambda user_id: UserProfile.objects.get_or_create(user=user_id)[0])

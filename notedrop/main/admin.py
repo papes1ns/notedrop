@@ -16,7 +16,7 @@ admin.site.register(UserProfile, UserProfileAdmin)
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('school', 'designator', 'number',)
+    list_display = ('designator', 'number',)
     list_filter = ('school', 'designator')
 
 admin.site.register(Course, CourseAdmin)
@@ -30,13 +30,13 @@ admin.site.register(School, SchoolAdmin)
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('author', 'course', 'created', 'archived')
+    list_display = ('content', 'author', 'course', 'created', 'archived')
     list_filter = ('course', 'created', 'archived')
 
 admin.site.register(Post, PostAdmin)
 
 
 class PostDataAdmin(admin.ModelAdmin):
-    list_display = ('user', 'upvote', 'downvote', 'noted')
+    list_display = ('post','user', 'upvote', 'noted')
 
 admin.site.register(PostData, PostDataAdmin)

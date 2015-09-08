@@ -1,3 +1,4 @@
+import json
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
@@ -10,17 +11,16 @@ from .forms import CourseForm, PostForm
 @login_required
 def feed(request):
     context = {}
-    context['courses'] = request.user.profile.courses.all()
     posts = []
     for p in Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'):
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
             'obj': p,
             'noted': post_data.noted,
-            'upvote': post_data.upvote,
-            'downvote': post_data.downvote
+            'upvote': post_data.upvote
         })
 
+    context['courses'] = request.user.profile.courses.all()
     context['posts'] = posts
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -128,3 +128,34 @@ def course_form(request):
 
     context['form'] = form
     return render(request, 'main/course_form.html', context)
+
+@login_required
+def post_options(request):
+    if 'noted_pk' in request.POST:
+        post_data = PostData.objects.get(post=request.POST['noted_pk'], user=request.user)
+        if post_data.noted is False:
+            post_data.noted = True
+        else:
+            post_data.noted = False
+        post_data.save()
+        return HttpResponse(json.dumps(post_data.noted))
+
+    if 'up_pk' in request.POST:
+        post_data = PostData.objects.get(post=request.POST['up_pk'], user=request.user)
+        if post_data.upvote is not True:
+            post_data.upvote = True
+        else:
+            post_data.upvote = None
+        post_data.save()
+        return HttpResponse(json.dumps({'post_pk': post_data.post.pk, 'rating': post_data.post.rating, 'upvote': post_data.upvote}))
+
+    if 'down_pk' in request.POST:
+        post_data = PostData.objects.get(post=request.POST['down_pk'], user=request.user)
+        if post_data.upvote is not False:
+            post_data.upvote = False
+        else:
+            post_data.upvote = None
+        post_data.save()
+        return HttpResponse(json.dumps({'post_pk': post_data.post.pk, 'rating': post_data.post.rating, 'upvote': post_data.upvote}))
+
+    return HttpResponseBadRequest()

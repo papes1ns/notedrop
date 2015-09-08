@@ -32,14 +32,10 @@ $(document).ready(function(){
   $('.course-handler').click(function(){
     var clickedButton = $(this);
     $.post('{% url 'profile' %}', {'course_pk': $(this).val(), 'action': $(this).text()})
-      .success(function(data){
+      .done(function(data){
         flip_button_action(clickedButton)
         reload_schools($('#school-list'), data);
-      })
-      .fail(function(date){
-        console.log(data);
       });
-
   });
 });
 

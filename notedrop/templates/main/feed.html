@@ -38,15 +38,69 @@
     <span class='post-created'>Created {{ post.obj.created }}</span>
   </div>
 
-  <div class='post-options'>
-    <button class='post-options-btn' value='{{ post.noted }}'>&#9733;</button>
-    <button class='post-options-btn' value='up-{{ post.obj.pk }}'>&#9650;</button>
+  <div class='post-options post-{{ post.obj.pk }}'>
+    <button class='post-options-btn noted-btn noted-{{ post.noted }}' object='{{ post.obj.pk }}'>&#9733;</button>
+    <button class='post-options-btn up-btn{% if post.upvote == True %} up{% endif %}' object='{{ post.obj.pk }}'>&#9650;</button>
     <span class='post-rating'>{{ post.obj.rating }}</span>
-    <button class='post-options-btn' value='down-{{ post.obj.pk }}'>&#9660;</button>
+    <button class='post-options-btn down-btn{% if post.upvote == False %} down{% endif %}' object='{{ post.obj.pk }}'>&#9660;</button>
   </div>
 
 </div>
 {% endfor %}
 </div>
 <!-- end of notefeed  -->
+{% endblock %}
+
+{% block extra_head %}
+<script>
+$(document).ready(function(){
+
+  $('.noted-btn').click(function(){
+    var btn = $(this);
+    $.post('{% url 'post_options' %}', {'noted_pk': $(this).attr('object')})
+      .done(function(data){
+        data = JSON.parse(data);
+        if(data == true){
+          btn.css('color', 'rgb(255, 145, 0)');
+        }
+        else {
+          btn.css('color', 'rgb(193, 193, 193)');
+        }
+      });
+  });
+
+  $('.up-btn').click(function(){
+    $.post('{% url 'post_options' %}', {'up_pk': $(this).attr('object')})
+      .done(function(data){
+        data = JSON.parse(data);
+        update_rating_btns(data);
+      });
+  });
+
+  $('.down-btn').click(function(){
+    $.post('{% url 'post_options' %}', {'down_pk': $(this).attr('object')})
+      .done(function(data){
+        data = JSON.parse(data);
+        update_rating_btns(data);
+      });
+  });
+});
+
+function update_rating_btns(data){
+  $('.post-'+data['post_pk'].toString()+' > .post-rating').text(data['rating']);
+  if(data['upvote'] == true){
+    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(255, 145, 0)');
+    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(193, 193, 193)');
+  }
+  else if(data['upvote'] == false){
+    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(255, 145, 0)');
+    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(193, 193, 193)');
+  }
+  else{
+    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(193, 193, 193)');
+    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(193, 193, 193)');
+  }
+}
+
+</script>
 {% endblock %}
