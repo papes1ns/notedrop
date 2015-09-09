@@ -17,9 +17,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('designator', models.CharField(max_length=3)),
-                ('number', models.PositiveSmallIntegerField()),
+                ('number', models.CharField(max_length=3)),
                 ('name', models.CharField(max_length=50)),
-                ('section', models.CharField(max_length=8, null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -37,9 +36,8 @@ class Migration(migrations.Migration):
             name='PostData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('upvote', models.BooleanField(default=False)),
-                ('downvote', models.BooleanField(default=False)),
-                ('noted', models.BooleanField(default=False)),
+                ('upvote', models.NullBooleanField(default=None)),
+                ('noted', models.NullBooleanField(default=False)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('post', models.ForeignKey(to='main.Post')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -58,10 +56,8 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('discipline', models.CharField(max_length=50, null=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('courses', models.ManyToManyField(to='main.Course', db_table=b'enrolled_courses')),
-                ('schools', models.ManyToManyField(to='main.School', db_table=b'enrolled_schools')),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
