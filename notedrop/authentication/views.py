@@ -32,8 +32,10 @@ def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('profile')
+            user = form.save()
+            user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+            login(request, user)
+            return redirect('feed')
         else:
             context['form'] = form
             return render(request, 'authentication/signup.html', context)

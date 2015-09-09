@@ -88,3 +88,8 @@ input {
   font-size: 10px;
   font-style: italic;
 }
+.post-permalink {
+  text-decoration: none;
+  font-size: 18px;
+  float: right;
+}

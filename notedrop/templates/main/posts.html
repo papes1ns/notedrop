@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Note by ID{% endblock %}
+
+{% block content %}
+<h2>Note #{{ post.pk }}</h2>
+<table>
+  <tr>
+    <td>Author</td>
+    <td>{{ post.author }}</td>
+  </tr>
+  <tr>
+    <td>Course</td>
+    <td>{{ post.course }}</td>
+  </tr>
+  <tr>
+    <td>Contents</td>
+    <td>{{ post.content }}</td>
+  </tr>
+  <tr>
+    <td>Created On</td>
+    <td>{{ post.created }}</td>
+  </tr>
+  <tr>
+    <td>Rating</td>
+    <td>{{ post.rating }}</td>
+  </tr>
+  <tr>
+    <td>Is Archived</td>
+    <td>{{ post.archived }}</td>
+  </tr>
+</table>
+{% endblock %}

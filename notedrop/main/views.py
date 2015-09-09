@@ -18,7 +18,7 @@ def feed(request, course_pk=None):
             q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
             context['filter_course'] = q[0].course.name
         else:
-            q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
+            return redirect('feed')
     else:
         q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
         
@@ -180,5 +180,13 @@ def users(request, username=None):
     context['courses'] = q.courses.all()
     context['schools'] = School.objects.filter(pk__in=q.courses.all().values('school').distinct())
     return render(request, 'main/users.html', context)
+    
+@login_required
+def posts(request, post_pk=None):
+    context = {}
+    post = Post.objects.filter(pk=int(post_pk))
+    if post:
+        context['post'] = post[0]
+    return render(request, 'main/posts.html', context)
     
     
