@@ -21,7 +21,7 @@ def feed(request, course_pk=None):
             return redirect('feed')
     else:
         q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
-        
+
     for p in q:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
@@ -29,10 +29,10 @@ def feed(request, course_pk=None):
             'noted': post_data.noted,
             'upvote': post_data.upvote
         })
-        
+
     context['courses'] = request.user.profile.courses.all()
     context['posts'] = posts
-    
+
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -46,6 +46,8 @@ def feed(request, course_pk=None):
 
     form = PostForm()
     form.fields['course'].queryset = request.user.profile.courses.all()
+    if 'filter_course' in context:
+        form.fields['course'].initial = Course.objects.get(pk=course_pk)
     context['form'] = form
     return render(request, 'main/feed.html', context)
 
@@ -170,7 +172,7 @@ def post_options(request):
         return HttpResponse(json.dumps({'post_pk': post_data.post.pk, 'rating': post_data.post.rating, 'upvote': post_data.upvote}))
 
     return HttpResponseBadRequest()
-    
+
 @login_required
 def users(request, username=None):
     context = {}
@@ -180,7 +182,7 @@ def users(request, username=None):
     context['courses'] = q.courses.all()
     context['schools'] = School.objects.filter(pk__in=q.courses.all().values('school').distinct())
     return render(request, 'main/users.html', context)
-    
+
 @login_required
 def posts(request, post_pk=None):
     context = {}
@@ -188,5 +190,3 @@ def posts(request, post_pk=None):
     if post:
         context['post'] = post[0]
     return render(request, 'main/posts.html', context)
-    
-    

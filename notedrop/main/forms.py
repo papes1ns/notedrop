@@ -8,6 +8,8 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('course', 'content',)
 
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 50}))
+
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
