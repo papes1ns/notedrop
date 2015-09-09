@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pagination_tags %}
 
 {% block title %}Notedrop Feed{% endblock %}
 
@@ -28,6 +29,7 @@
 
 <div class='notefeed'>
 <h2>Note Feed</h2>
+{% autopaginate posts 5 %}
 {% for post in posts %}
 <div class='post'>
 
@@ -48,6 +50,7 @@
 
 </div>
 {% endfor %}
+{% paginate %}
 </div>
 <!-- end of notefeed  -->
 {% endblock %}
