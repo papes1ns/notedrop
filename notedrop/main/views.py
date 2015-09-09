@@ -64,6 +64,7 @@ def profile(request, username=None):
         data = serializers.serialize('json', schools, fields=('name','state', 'city',))
         return HttpResponse(data)
 
+    context['posts'] = Post.objects.filter(archived=False, author=request.user)
     context['schools'] = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
     context['courses'] = request.user.profile.courses.all()
     return render(request, 'main/profile.html', context)
@@ -190,3 +191,13 @@ def posts(request, post_pk=None):
     if post:
         context['post'] = post[0]
     return render(request, 'main/posts.html', context)
+
+def post_delete(request, post_pk=None):
+    if post_pk:
+        post_pk = int(post_pk)
+        if any(p.pk == post_pk for p in Post.objects.filter(author=request.user)):
+            post = Post.objects.get(pk=post_pk)
+            post.archived = True
+            post.save()
+
+    return redirect('profile')
