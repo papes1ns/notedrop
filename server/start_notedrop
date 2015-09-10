@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NAME="notedrop"
-DJANGODIR=/webapps/notedrop_env/notedrop
-SOCKFILE=/webapps/notedrop_env/run/gunicorn.sock
+DJANGODIR=/opt/notedrop/notedrop
+SOCKFILE=/opt/notedrop/run/gunicorn.sock
 USER=ubuntu
 GROUP=ubuntu
 NUM_WORKERS=3

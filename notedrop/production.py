@@ -18,4 +18,4 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = '/webapps/notedrop_env/notedrop/static/'
+STATIC_ROOT = '/opt/notedrop/static/'
