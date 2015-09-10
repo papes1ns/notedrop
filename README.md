@@ -2,7 +2,7 @@
 Content feed where students can share information about their currently enrolled courses (documents, posts, pictures, etc)
 
 This was started as an independent study project by Nathan Papes.
-Current versions will be running at 52.26.203.237.
+Current versions will be running at 52.88.79.68.
 
 ## TODO
 - [x] Script that imports data for colleges and state names
