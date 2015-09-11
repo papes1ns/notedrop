@@ -14,16 +14,25 @@ from .forms import CourseForm, PostForm
 def feed(request):
     context = {}
     posts = []
+    q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all())
+    
     if request.GET.get('courseid', None):
         course_pk = int(request.GET['courseid'])
         if any(c.pk == course_pk for c in request.user.profile.courses.all()):
-            q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
+            q = q.filter(course=course_pk).order_by('created')
             context['filter_course'] = course_pk
         else:
             return redirect('feed')
-    else:
-        q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created')
-
+    
+    if request.GET.get('filter', None):
+        filter_var = request.GET['filter']
+        context['filter'] = filter_var
+        
+        if filter_var == 'latest':
+            q = q.order_by('-created')
+        if filter_var == 'rating':
+            q = sorted(q, key=lambda p: p.rating, reverse=True)
+    
     for p in q:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({

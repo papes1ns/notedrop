@@ -10,7 +10,7 @@
 <h2>Filter feed by course <a href='{% url 'feed' %}'>Clear Filter</a></h2>
 <ul>
   {% for course in courses %}
-    <li><a href='{% url 'feed' %}?courseid={{ course.pk }}' {% if filter_course == course.pk %}style='color: rgb(166, 2, 105);'{% endif %}>{{ course }}</a></li>
+    <li><a href='{% url 'feed' %}{% if filter %}?courseid={{ course.pk }}&filter={{ filter }}{% else %}?courseid={{ course.pk }}{% endif %}' {% if filter_course == course.pk %}style='color: rgb(166, 2, 105);'{% endif %}>{{ course }}</a></li>
   {% endfor %}
 </ul>
 
@@ -29,6 +29,10 @@
 
 <div class='notefeed'>
 <h2>Note Feed</h2>
+<h3>
+  <a href='{% url 'feed' %}{% if filter_course %}?courseid={{ filter_course }}&filter=latest{% else %}?filter=latest{% endif %}' {% if filter == 'latest' %}style='color: rgb(166, 2, 105);'{% endif %}>Latest</a>
+  <a href='{% url 'feed' %}{% if filter_course %}?courseid={{ filter_course }}&filter=rating{% else %}?filter=rating{% endif %}' {% if filter == 'rating' %}style='color: rgb(166, 2, 105);'{% endif %}>Rating</a>
+</h3>
 {% autopaginate posts 5 %}
 {% for post in posts %}
 <div class='post'>
