@@ -19,8 +19,8 @@ class Command(BaseCommand):
                 recipient = []
                 messages = []
                 for post in Post.objects.filter(course__in=user.courses.all()):
-                    post_data, created = PostData.objects.get_or_create(post=post, user=user.user, notified=False)
-                    if user.notify_count <= post.rating:
+                    post_data, created = PostData.objects.get_or_create(post=post, user=user.user)
+                    if post_data.notified is not True and user.notify_count <= post.rating:
                         message = (
                             'Post related to {course} received {rating} upvote(s)'.format(course=post.course, rating=post.rating),
                             'URL: {host}posts/{postid}/'.format(host=HOSTED_IP, postid=post.pk)
