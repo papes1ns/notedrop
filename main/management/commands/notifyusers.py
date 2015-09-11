@@ -13,7 +13,7 @@ class Command(BaseCommand):
         connection = mail.get_connection()
         connection.open()
         queue = []
-        
+
         for user in UserProfile.objects.all():
             if user.user.email:
                 recipient = []
@@ -31,13 +31,14 @@ class Command(BaseCommand):
                                 )
                                 message =  ' '.join(message)
                                 messages.append(message)
-                    
+                                post_data.notified = True
+                                post_data.save()
+
                     if messages:
-                        '\n\n'.join(messages)
-                        email = mail.EmailMessage(MESSAGE_SUBJECT, message, settings.EMAIL_HOST_USER, recipient, connection=connection)
+                        messages = '\n\n'.join(messages)
+                        email = mail.EmailMessage(MESSAGE_SUBJECT, messages, settings.EMAIL_HOST_USER, recipient, connection=connection)
                         queue.append(email)
-                        post_data.notified = True
-                        post_data.save()
+
 
         connection.send_messages(queue)
         connection.close()
