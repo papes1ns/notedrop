@@ -16,7 +16,8 @@ def feed(request, course_pk=None):
         course_pk = int(course_pk)
         if any(c.pk == course_pk for c in request.user.profile.courses.all()):
             q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
-            context['filter_course'] = q[0].course.name
+            if q:
+                context['filter_course'] = q[0].course.name
         else:
             return redirect('feed')
     else:
