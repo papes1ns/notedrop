@@ -36,6 +36,9 @@ td {
   margin: auto;
   width: 90%;
 }
+.note-form select{
+  width: 100%;
+}
 .errorlist > li{
   color: rgb(207, 31, 0);
 }

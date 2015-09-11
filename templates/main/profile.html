@@ -27,9 +27,11 @@
 <h2>Here are your Notes</h2>
 <table>
 {% for post in posts %}
-  <td>{{ post }}</td>
-  <td><a href='{% url 'posts' post_pk=post.pk %}'>Link</a></td>
-  <td><a href='{% url 'post_delete' post_pk=post.pk %}'>Delete</a></td>
+  <tr>
+    <td>{{ post }}</td>
+    <td><a href='{% url 'posts' post_pk=post.pk %}'>Link</a></td>
+    <td><a href='{% url 'post_delete' post_pk=post.pk %}'>Delete</a></td>
+  </tr>
 {% endfor %}
 </table>
 

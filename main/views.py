@@ -9,11 +9,11 @@ from .models import School, Course, UserProfile, Post, PostData
 from .forms import CourseForm, PostForm
 
 @login_required
-def feed(request, course_pk=None):
+def feed(request):
     context = {}
     posts = []
-    if course_pk:
-        course_pk = int(course_pk)
+    if request.GET.get('courseid', None):
+        course_pk = int(request.GET['courseid'])
         if any(c.pk == course_pk for c in request.user.profile.courses.all()):
             q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
             if q:

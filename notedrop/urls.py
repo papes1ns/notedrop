@@ -4,8 +4,7 @@ from main.views import feed, select_course, post_course, course_form, profile, p
 from authentication.views import login_user, logout_user, signup
 
 urlpatterns = [
-    url(r'^$', feed, name='feed'),
-    url(r'^feed/course/(?P<course_pk>[0-9]+)/$', feed, name='feed_course_filter'),
+    url(r'^feed/', feed, name='feed'),
     url(r'^posts/(?P<post_pk>[0-9]+)/$', posts, name='posts'),
     url(r'^posts/delete/(?P<post_pk>[0-9]+)/$', post_delete, name='post_delete'),
     url(r'^users/(?P<username>[a-zA-Z0-9-@]+)/$', users, name='users'),
