@@ -15,6 +15,7 @@ class Command(BaseCommand):
         queue = []
 
         for user in UserProfile.objects.all():
+            print user.user.email, user.notify_count
             if user.user.email:
                 recipient = []
                 recipient.append(user.user.email)
@@ -35,8 +36,9 @@ class Command(BaseCommand):
                                 post_data.save()
 
                     if messages:
-                        messages = '\n\n'.join(messages)
-                        email = mail.EmailMessage(MESSAGE_SUBJECT, messages, settings.EMAIL_HOST_USER, recipient, connection=connection)
+                        message_body = '\n\n'.join(messages)
+                        print messages
+                        email = mail.EmailMessage(MESSAGE_SUBJECT, message_body, settings.EMAIL_HOST_USER, recipient, connection=connection)
                         queue.append(email)
 
 
