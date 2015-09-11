@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Starred Notes{% endblock %}
+
+{% block content %}
+  <h1>Here are the notes you starred</h1>
+  <table class='starred-post-tbl'>
+    {% for post in posts %}
+      <tr>
+        <td>{{ post.post.content }}</td>
+        <td>{{ post.post.created }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

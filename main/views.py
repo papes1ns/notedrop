@@ -16,8 +16,7 @@ def feed(request):
         course_pk = int(request.GET['courseid'])
         if any(c.pk == course_pk for c in request.user.profile.courses.all()):
             q = Post.objects.filter(archived=False, course=course_pk).order_by('-created')
-            if q:
-                context['filter_course'] = q[0].course.name
+            context['filter_course'] = course_pk
         else:
             return redirect('feed')
     else:
@@ -202,3 +201,9 @@ def post_delete(request, post_pk=None):
             post.save()
 
     return redirect('profile')
+    
+@login_required
+def starred(request):
+    context = {}
+    context['posts'] = PostData.objects.filter(user=request.user, noted=True)
+    return render(request, 'main/starred.html', context)
