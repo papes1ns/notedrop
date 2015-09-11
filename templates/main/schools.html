@@ -4,13 +4,26 @@
 
 {% block content %}
 <h1>Select the school in which your course is in</h1>
-
-  <table>
+  <input id='school-search' type='text' placeholder='School Search' />
+  
+  <ul id='school-list'>
   {% for school in schools %}
-  <tr>
-    <td><a href='{% url 'designator_selection' state=school.state|slugify school=school.name|slugify %}'>{{ school.name }}</a></td>
-  </tr>
+    <li><a href='{% url 'designator_selection' state=school.state|slugify school=school.name|slugify %}'>{{ school.name }}</a></li>
   {% endfor %}
-  </table>
+  </ul>
 
+{% endblock %}
+
+{% block extra_head %}
+<script>
+$(document).ready(function(){
+  $('#school-search').keyup(function(){
+    var searchVal = $(this).val();
+    $('#school-list > li').each(function(){
+     var text = $(this).text().toLowerCase();
+        (text.indexOf(searchVal) == 0) ? $(this).show() : $(this).hide();
+    });
+  });
+});
+</script>
 {% endblock %}
