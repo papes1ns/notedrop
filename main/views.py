@@ -1,5 +1,6 @@
 import json
 from django.core import serializers
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -7,6 +8,7 @@ from django.forms import widgets
 
 from .models import School, Course, UserProfile, Post, PostData
 from .forms import CourseForm, PostForm
+
 
 @login_required
 def feed(request):
@@ -39,6 +41,8 @@ def feed(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            if request.GET.get('courseid', None):
+                return redirect(reverse('feed') + '?courseid=' + str(request.GET['courseid']))
             return redirect('feed')
         else:
             context['form'] = form
@@ -55,15 +59,23 @@ def feed(request):
 def profile(request, username=None):
     context = {}
     if request.is_ajax():
-        course = Course.objects.get(pk=request.POST['course_pk'])
-        if request.POST['action'] == 'Unfollow':
-            request.user.profile.courses.remove(course)
-        else:
-            request.user.profile.courses.add(course)
-        schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
-        data = serializers.serialize('json', schools, fields=('name','state', 'city',))
-        return HttpResponse(data)
-
+        if request.POST.get('course_pk', None):
+            course = Course.objects.get(pk=request.POST['course_pk'])
+            if request.POST['action'] == 'Unfollow':
+                request.user.profile.courses.remove(course)
+            else:
+                request.user.profile.courses.add(course)
+            schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
+            data = serializers.serialize('json', schools, fields=('name','state', 'city',))
+            return HttpResponse(data)
+        
+        if request.POST.get('notify_count', None):
+            profile = UserProfile.objects.get(user=request.user)
+            profile.notify_count = request.POST['notify_count']
+            profile.save()
+            return HttpResponse(profile.notify_count)
+        
+    context['notify_count'] = request.user.profile.notify_count
     context['posts'] = Post.objects.filter(archived=False, author=request.user)
     context['schools'] = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
     context['courses'] = request.user.profile.courses.all()

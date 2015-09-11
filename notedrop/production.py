@@ -1,7 +1,7 @@
 from notedrop.settings import *
 
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['52.88.79.68',]
 
 ADMINS = (
     ('Nathan Papes', 'papes1ns@cmich.edu'),

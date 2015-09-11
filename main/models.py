@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     courses = models.ManyToManyField('Course', db_table='enrolled_courses')
+    notify_count = models.PositiveIntegerField(default=0)
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
@@ -65,6 +66,7 @@ class PostData(models.Model):
 
     upvote = models.NullBooleanField(default=None)
     noted = models.NullBooleanField(default=False)
+    notified = models.NullBooleanField(default=False)
     modified = models.DateTimeField(auto_now=True)
 
 # property to get related UserProfile from a User

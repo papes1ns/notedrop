@@ -17,7 +17,7 @@
 <a href={% url 'state_selection' %}>Add another course</a>
 
 <h2>Drop a Note</h2>
-<form class='note-form' action='{% url 'feed' %}' method='post'>
+<form class='note-form' action='{% url 'feed' %}?courseid={{ filter_course }}' method='post'>
   {% csrf_token %}
   <table>
     {{ form.as_table }}
