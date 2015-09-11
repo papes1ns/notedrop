@@ -17,6 +17,8 @@
 {% block extra_head %}
 <script>
 $(document).ready(function(){
+  $('#school-search').focus();
+  
   $('#school-search').keyup(function(){
     var searchVal = $(this).val();
     $('#school-list > li').each(function(){

@@ -6,8 +6,8 @@
 <h1>{{ request.user }}'s Profile</h1>
 
 <h2>Settings</h2>
-<label for='notify-count-input'>Minimum value before sending you an email (use 0 to never notify you)</label>
-<input id='notify-count-input' type='number' min='0' max='255' value={{ notify_count }} /> <button id='notify-count-btn'>Update</button>
+<label for='notify-count-input'>Minimum post rating before sending you an email (use 0 to never notify you)</label>
+<input id='notify-count-input' type='number' min='0' max='255' placeholder={{ notify_count }} value={{ notify_count }} /> <button id='notify-count-btn'>Update</button>
 
 <h2>Here are the courses you are following</h2>
 <table>
