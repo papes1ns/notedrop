@@ -14,9 +14,9 @@
 {% endfor %}
 </table>
 
-<h2>If you do not see your course <a href='{% url 'course_form' %}?school={{ school.name|slugify }}&designator={{ designator }}'>add a new one?</a>
-  
-<h2>All done? <a href='{% url 'feed' %}'>Go to Note Feed</a></h2>
+<label>If you do not see your course <a href='{% url 'course_form' %}?school={{ school.name|slugify }}&designator={{ designator }}'>Add course?</a></label>
+</br>
+<label>All done? <a href='{% url 'feed' %}'>Go to Feed</a></label>
 
 {% endblock %}
 
