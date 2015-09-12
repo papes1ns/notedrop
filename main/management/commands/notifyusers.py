@@ -33,8 +33,10 @@ class Command(BaseCommand):
                 if messages:
                     message_body = '\n\n'.join(messages)
                     email = mail.EmailMessage(MESSAGE_SUBJECT, message_body, settings.EMAIL_HOST_USER, recipient, connection=connection)
+                    self.stdout.write("Sending email to {email}\n. notify_count: {count}".format(email=recipient[0]), count=user.notify_count)
                     queue.append(email)
 
 
         connection.send_messages(queue)
         connection.close()
+        self.stdout.write("{sent} emails were sent".format(sent=len(queue)))
