@@ -16,8 +16,9 @@ class Command(BaseCommand):
 
         for user in UserProfile.objects.all():
             if user.user.email and user.notify_count > 0:
-                recipient = []
                 messages = []
+                recipient = []
+                recipient.append(user.user.email)
                 for post in Post.objects.filter(course__in=user.courses.all()):
                     post_data, created = PostData.objects.get_or_create(post=post, user=user.user)
                     if post_data.notified is not True and user.notify_count <= post.rating:
