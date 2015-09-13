@@ -43,6 +43,7 @@ def logout_user(request):
 
 def signup(request):
     context = {}
+    error = ""
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -51,6 +52,12 @@ def signup(request):
             login(request, user)
             return redirect('feed')
         else:
+            for k, v in form.errors.as_data().iteritems():
+                field = k.title()
+                for msg in v:
+                    error += '{field}: {msg}\n'.format(field=field, msg=str(msg[0]))
+
+            context['error'] = error
             context['form'] = form
             return render(request, 'authentication/signup.html', context)
 
