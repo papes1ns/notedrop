@@ -1,26 +1,29 @@
 {% load staticfiles %}
+
 <html>
 <head>
   <title>{% block title %}Notedrop{% endblock %}</title>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-  <link rel='stylesheet' type='text/css' href='{% static 'css/global.css' %}'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
   <script src='//code.jquery.com/jquery-1.11.3.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
   <script src='{% static 'js/csrf_ajax_setup.js' %}'></script>
   {% block extra_head %}{% endblock %}
 </head>
 <body>
-{% block navigation %}
+<div class='container'>
+{% if request.user.is_authenticated %}
 <nav>
-  <ul class='nav-links'>
+  <ul class='nav nav-pills'>
     <li><a href='{% url 'feed' %}'>Feed</a></li>
     <li><a href='{% url 'profile' %}'>Profile</a></li>
     <li><a href='{% url 'starred' %}'>Starred</a></li>
     <li><a href='{% url 'logout' %}'>Logout</a></li>
   </ul>
 </nav>
-{% endblock %}
-<div class='wrap'>
+{% endif %}
 {% block content %}{% endblock %}
 </div>
+
 </body>
 </html>

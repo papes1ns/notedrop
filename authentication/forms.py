@@ -7,12 +7,18 @@ class LoginForm(forms.Form):
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput())
 
-    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not User.objects.filter(username=username):
+            raise forms.ValidationError('Invalid username')
+
+        return username
+
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-        
+
     email = forms.EmailField(required=True)
 
     def clean_email(self):
