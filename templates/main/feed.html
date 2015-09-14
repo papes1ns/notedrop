@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load pagination_tags %}
+{% load bootstrap_pagination %}
 {% load widget_tweaks %}
 
 {% block title %}Notedrop Feed{% endblock %}
@@ -39,8 +39,6 @@
 
 
 <h2>Note Feed</h2>
-
-{% autopaginate posts 5 %}
 {% for post in posts %}
 <div class='post'>
 
@@ -61,7 +59,7 @@
 
 </div>
 {% endfor %}
-{% paginate %}
+{% bootstrap_paginate posts show_prev_next="false" show_first_last="true" %}
 </div>
 <!-- end of notefeed  -->
 
@@ -150,7 +148,6 @@ function update_rating_btns(data){
   margin-top: 20px;
 }
 .post-options {
-  /*float: right;*/
   display: inline-block;
   vertical-align: top;
   margin-left: 10px;
@@ -161,16 +158,13 @@ function update_rating_btns(data){
   padding: 0;
   border: none;
   background: none;
-  font-size: 22px;
+  font-size: 20px;
 }
 .post-rating {
   font-size: 18px;
   padding-left: 5px;
 }
 .post-info {
-  /*margin-top: 15px;
-  padding-bottom: 15px;*/
-  /*float: left;*/
   display: inline-block;
   vertical-align: top;
   width: 90%;
