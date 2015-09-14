@@ -26,27 +26,31 @@ def feed(request):
         })
 
     context['posts'] = posts
-
-    # if request.method == 'POST':
-    #     form = PostForm(request.POST)
-    #     if form.is_valid():
-    #         post = form.save(commit=False)
-    #         post.author = request.user
-    #         post.save()
-    #         if request.GET.get('courseid', None):
-    #             return redirect(reverse('feed') + '?courseid=' + str(request.GET['courseid']))
-    #         return redirect('feed')
-    #     else:
-    #         context['form'] = form
-    #         return render(request, 'main/feed.html', context)
-
     form = PostForm()
-    form.fields['course'].queryset = request.user.profile.courses.all()
-    if 'filter_course' in context:
-        form.fields['course'].initial = Course.objects.get(pk=course_pk)
+    if 'course' in request.GET:
+        form.fields['course'].initial = request.GET['course']
     context['form'] = form
     context['filter'] = f
     return render(request, 'main/feed.html', context)
+
+
+@login_required
+def note_drop(request):
+    referer =  request.META.get('HTTP_REFERER', None)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        errors = []
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.author = request.user
+            form.save()
+            return HttpResponse(referer)
+        else:
+            for k, v in form.errors.as_data().iteritems():
+                field = k.title()
+                for msg in v:
+                    errors.append('{field}: {msg}'.format(field=field, msg=str(msg[0])))
+            return HttpResponseBadRequest(json.dumps(errors))
 
 @login_required
 def profile(request, username=None):

@@ -31,7 +31,7 @@ def login_user(request):
                 field = k.title()
                 for msg in v:
                     error += '{field}: {msg}\n'.format(field=field, msg=str(msg[0]))
-
+    
     context['error'] = error
     context['form'] =  LoginForm()
     context['next'] = request.GET.get('next', None) or '/'
