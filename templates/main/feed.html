@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load pagination_tags %}
+{% load widget_tweaks %}
 
 {% block title %}Notedrop Feed{% endblock %}
 
@@ -26,12 +27,8 @@
 </div> -->
 <!-- end of sidebar -->
 
-<div class='notefeed'>
+<div class='col-sm-8'>
 <h2>Note Feed</h2>
-<h3>
-  <a href='{% url 'feed' %}{% if filter_course %}?courseid={{ filter_course }}&filter=latest{% else %}?filter=latest{% endif %}' {% if filter == 'latest' %}style='color: rgb(166, 2, 105);'{% endif %}>Latest</a>
-  <a href='{% url 'feed' %}{% if filter_course %}?courseid={{ filter_course }}&filter=rating{% else %}?filter=rating{% endif %}' {% if filter == 'rating' %}style='color: rgb(166, 2, 105);'{% endif %}>Rating</a>
-</h3>
 {% autopaginate posts 5 %}
 {% for post in posts %}
 <div class='post'>
@@ -56,6 +53,15 @@
 {% paginate %}
 </div>
 <!-- end of notefeed  -->
+
+<aside class='col-sm-4 well'>
+  <h2>Filters</h2>
+  <form class='input-group' action='{% url 'feed' %}' method='get'>
+    {{ filter.form.as_p }}
+    <input class='btn btn-sm btn-primary btn-block' type="submit" />
+  </form>
+</aside>
+
 {% endblock %}
 
 {% block extra_head %}
@@ -139,7 +145,7 @@ function update_rating_btns(data){
   /*float: left;*/
   display: inline-block;
   vertical-align: top;
-  width: 600px;
+  width: 90%;
   border-bottom: 1px solid rgb(0, 158, 200);
 }
 .post-course {

@@ -8,32 +8,16 @@ from django.forms import widgets
 
 from .models import School, Course, UserProfile, Post, PostData
 from .forms import CourseForm, PostForm
+from .filters import PostFilter
 
 
 @login_required
 def feed(request):
     context = {}
     posts = []
-    q = Post.objects.filter(archived=False, course__in=request.user.profile.courses.all())
+    f = PostFilter(request.GET, queryset=Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'))
     
-    if request.GET.get('courseid', None):
-        course_pk = int(request.GET['courseid'])
-        if any(c.pk == course_pk for c in request.user.profile.courses.all()):
-            q = q.filter(course=course_pk).order_by('created')
-            context['filter_course'] = course_pk
-        else:
-            return redirect('feed')
-    
-    if request.GET.get('filter', None):
-        filter_var = request.GET['filter']
-        context['filter'] = filter_var
-        
-        if filter_var == 'latest':
-            q = q.order_by('-created')
-        if filter_var == 'rating':
-            q = sorted(q, key=lambda p: p.rating, reverse=True)
-    
-    for p in q:
+    for p in f:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
             'obj': p,
@@ -41,27 +25,27 @@ def feed(request):
             'upvote': post_data.upvote
         })
 
-    context['courses'] = request.user.profile.courses.all()
     context['posts'] = posts
 
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            if request.GET.get('courseid', None):
-                return redirect(reverse('feed') + '?courseid=' + str(request.GET['courseid']))
-            return redirect('feed')
-        else:
-            context['form'] = form
-            return render(request, 'main/feed.html', context)
+    # if request.method == 'POST':
+    #     form = PostForm(request.POST)
+    #     if form.is_valid():
+    #         post = form.save(commit=False)
+    #         post.author = request.user
+    #         post.save()
+    #         if request.GET.get('courseid', None):
+    #             return redirect(reverse('feed') + '?courseid=' + str(request.GET['courseid']))
+    #         return redirect('feed')
+    #     else:
+    #         context['form'] = form
+    #         return render(request, 'main/feed.html', context)
 
     form = PostForm()
     form.fields['course'].queryset = request.user.profile.courses.all()
     if 'filter_course' in context:
         form.fields['course'].initial = Course.objects.get(pk=course_pk)
     context['form'] = form
+    context['filter'] = f
     return render(request, 'main/feed.html', context)
 
 @login_required
