@@ -4,8 +4,7 @@
 {% block title %}Notedrop Feed{% endblock %}
 
 {% block content %}
-<div class='sidebar'>
-<h1>Welcome to Notedrop, {{ request.user }} :)</h1>
+<!-- <div class='sidebar'>
 
 <h2>Filter feed by course <a href='{% url 'feed' %}'>Clear Filter</a></h2>
 <ul>
@@ -24,7 +23,7 @@
   </table>
   <button class='submit-note' type='submit'>Drop Note</button>
 </form>
-</div>
+</div> -->
 <!-- end of sidebar -->
 
 <div class='notefeed'>
@@ -111,4 +110,59 @@ function update_rating_btns(data){
 }
 
 </script>
+
+<style>
+.post {
+  margin-top: 20px;
+}
+.post-options {
+  /*float: right;*/
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+.post-options-btn {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 22px;
+}
+.post-rating {
+  font-size: 18px;
+  padding-left: 5px;
+}
+.post-info {
+  /*margin-top: 15px;
+  padding-bottom: 15px;*/
+  /*float: left;*/
+  display: inline-block;
+  vertical-align: top;
+  width: 600px;
+  border-bottom: 1px solid rgb(0, 158, 200);
+}
+.post-course {
+  font-size: 12px;
+  color: rgb(166, 2, 105);
+}
+.post-author {
+  float: right;
+}
+.post-content {
+  font-size: 20px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+}
+.post-created {
+  font-size: 10px;
+  font-style: italic;
+}
+.post-permalink {
+  text-decoration: none;
+  font-size: 18px;
+  float: right;
+}
+</style>
 {% endblock %}
