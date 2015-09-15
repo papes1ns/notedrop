@@ -43,7 +43,7 @@
 <div class='post'>
 
   <div class='post-info'>
-    <span class='post-course'>{{ post.obj.course }}</span>
+    <span class='post-course'><strong>{{ post.obj.course }}</strong></span>
     <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
     <p class='post-content'>{{ post.obj }}</p>
     <span class='post-created'>Created {{ post.obj.created }}</span>
