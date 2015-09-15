@@ -26,7 +26,6 @@ def feed(request):
             'upvote': post_data.upvote
         })
 
-    
     paginator = Paginator(posts, 5)
     page = request.GET.get('page')
     try:

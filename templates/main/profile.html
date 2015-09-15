@@ -7,19 +7,19 @@
 
 <h2>Settings</h2>
 <label for='notify-count-input'>Minimum post rating before sending you an email (use 0 to never notify you)</label>
-<input id='notify-count-input' type='number' min='0' max='255' placeholder={{ notify_count }} value={{ notify_count }} /> <button id='notify-count-btn'>Update</button>
+<input id='notify-count-input' type='number' min='0' max='255' placeholder={{ notify_count }} value={{ notify_count }} /> <button class='btn btn-md btn-default' id='notify-count-btn'>Update</button>
 
 <h2>Here are the courses you are following</h2>
-<table>
+<table class='table'>
   {% for course in courses %}
   <tr>
     <td>{{ course }}</td>
-    <td><button class='course-handler' value='{{ course.pk }}'>Unfollow</button></td>
+    <td><button class='btn btn-md btn-default course-handler' value='{{ course.pk }}'>Unfollow</button></td>
   </tr>
   {% endfor %}
 </table>
 
-<a href={% url 'state_selection' %}>Add another course</a>
+<a class='btn btn-md btn-primary' href={% url 'state_selection' %}>Add another course</a>
 
 <h2>Here are the schools of the courses you're following</h2>
 <ul id='school-list'>
@@ -29,7 +29,7 @@
 </ul>
 
 <h2>Here are your Notes</h2>
-<table>
+<table class='table'>
 {% for post in posts %}
   <tr>
     <td>{{ post }}</td>
