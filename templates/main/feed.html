@@ -39,27 +39,33 @@
   <h2 id='header'>Note Feed</h2>
   <button id='drop-note-btn' class='btn btn-md btn-primary pull-right' data-toggle="modal" data-target="#myModal">Drop a Note</button>
 </div>
-{% for post in posts %}
-<div class='post'>
+{% if posts %}
+  {% for post in posts %}
+  <div class='post'>
 
-  <div class='post-info'>
-    <span class='post-course bg-warning'><strong>{{ post.obj.course }}</strong></span>
-    <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
-    <p class='post-content'>{{ post.obj }}</p>
-    <em><span class='text-muted'>Created {{ post.obj.created }}</span></em>
-    <a class='post-permalink' href='{% url 'posts' post_pk=post.obj.pk %}'>&#8734;</a>
+    <div class='post-info'>
+      <span class='post-course bg-warning'><strong>{{ post.obj.course }}</strong></span>
+      <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
+      <p class='post-content'>{{ post.obj }}</p>
+      <em><span class='text-muted'>Created {{ post.obj.created }}</span></em>
+      <a class='post-permalink' href='{% url 'posts' post_pk=post.obj.pk %}'>&#8734;</a>
+    </div>
+
+    <div class='post-options post-{{ post.obj.pk }}'>
+      <button class='post-options-btn noted-btn' object='{{ post.obj.pk }}' {% if post.noted %}style='color: rgb(255, 145, 0);'{% endif %}>&#9733;</button>
+      <button class='post-options-btn up-btn' object='{{ post.obj.pk }}' {% if post.upvote == True %}style='color: rgb(255, 145, 0);'{% endif %}>&#9650;</button>
+      <span class='post-rating'>{{ post.obj.rating }}</span>
+      <button class='post-options-btn down-btn' object='{{ post.obj.pk }}' {% if post.upvote == False %}style='color: rgb(255, 145, 0);'{% endif %}>&#9660;</button>
+    </div>
+
   </div>
-
-  <div class='post-options post-{{ post.obj.pk }}'>
-    <button class='post-options-btn noted-btn' object='{{ post.obj.pk }}' {% if post.noted %}style='color: rgb(255, 145, 0);'{% endif %}>&#9733;</button>
-    <button class='post-options-btn up-btn' object='{{ post.obj.pk }}' {% if post.upvote == True %}style='color: rgb(255, 145, 0);'{% endif %}>&#9650;</button>
-    <span class='post-rating'>{{ post.obj.rating }}</span>
-    <button class='post-options-btn down-btn' object='{{ post.obj.pk }}' {% if post.upvote == False %}style='color: rgb(255, 145, 0);'{% endif %}>&#9660;</button>
+  {% endfor %}
+  {% bootstrap_paginate posts show_prev_next="false" show_first_last="true" %}
+{% else %}
+  <div class='alert alert-warning'>
+    No results
   </div>
-
-</div>
-{% endfor %}
-{% bootstrap_paginate posts show_prev_next="false" show_first_last="true" %}
+{% endif %}
 </div>
 <!-- end of notefeed  -->
 
