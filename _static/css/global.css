@@ -1,115 +1,99 @@
-* {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  background-color: rgb(0, 39, 46);
-  color: rgb(193, 193, 193);
-}
-a {
-  color: rgb(169, 200, 15);
-}
-ul {
-  list-style-type: none;
-}
-ul > li {
-  font-size: 16px;
-}
-h1 {
-  color: rgb(255, 145, 0);
-  font-size: 26px;
-}
-h2 {
-  color:rgb(130, 34, 252);
-  font-size: 20px;
-}
-label {
-    color: rgb(0, 157, 167);
-}
-input {
-  background-color: rgb(255, 255, 255);
-  color: rgb(53, 24, 112);
-  font-size: 18px;
-}
-td {
-  padding-right: 15px;
-}
-.wrap {
-  margin: auto;
-  width: 90%;
-}
-.note-form select{
-  width: 100%;
-}
-.errorlist > li{
-  color: rgb(207, 31, 0);
-}
-.nav-links > li {
-  display: inline;
-}
-.sidebar {
-  display: inline-block;
-  float: left;
-  margin-right: 20px;
-}
-.submit-note {
-  float: right;
-  margin-top: 15px;
-  margin-right: 15px;
-}
-.notefeed {
-  display: inline-block;
-}
 .post {
   margin-top: 20px;
+  border-radius: 10px;
+  border-bottom: 2px solid rgb(179, 179, 179);
 }
 .post-options {
-  float: right;
-  margin-left: 10px;
-  padding-bottom: 10px;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 5px;
+  padding-bottom: 0px;
 }
 .post-options-btn {
   display: block;
   padding: 0;
   border: none;
   background: none;
-  font-size: 22px;
+  font-size: 20px;
 }
 .post-rating {
   font-size: 18px;
   padding-left: 5px;
 }
 .post-info {
-  margin-top: 15px;
-  padding-bottom: 15px;
-  float: left;
-  width: 600px;
-  border-bottom: 1px solid rgb(0, 158, 200);
+  display: inline-block;
+  width: 93%;
+  padding: 10px 20px 0px 20px;
+  border-radius: 10px;
 }
-.post-course {
+/*.post-course {
   font-size: 12px;
   color: rgb(166, 2, 105);
-}
+}*/
 .post-author {
   float: right;
 }
 .post-content {
   font-size: 20px;
-  padding-left: 10px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
 }
-.post-created {
+/*.post-created {
   font-size: 10px;
   font-style: italic;
-}
+}*/
 .post-permalink {
   text-decoration: none;
   font-size: 18px;
   float: right;
 }
-.pagination {
-  float: right;
-  margin-right: 20px;
-  display: block;
-  margin-top: 15px
+.well-header {
+  font-size: 2em;
+  padding-bottom: 20px;
 }
-.pagination > a, span {
+.page-header {
+  margin-top: 5px;
+}
+.form-signin {
+  max-width: 500px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
   margin-bottom: 10px;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#drop-note-btn {
+  display: inline;
+  vertical-align: baseline;
+}
+#header {
+  display:inline;
+  width: 400px;
+}
+#school-search {
+  margin-bottom: 20px;
 }
