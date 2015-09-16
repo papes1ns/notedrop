@@ -15,8 +15,8 @@
 <body>
 <div class='container'>
 {% if request.user.is_authenticated %}
-<nav>
-  <ul class='nav nav-pills'>
+<nav class='navbar navbar-default'>
+  <ul class='nav navbar-nav'>
     <li><a href='{% url 'feed' %}'>Feed</a></li>
     <li><a href='{% url 'profile' %}'>Profile</a></li>
     <li><a href='{% url 'starred' %}'>Starred</a></li>

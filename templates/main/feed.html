@@ -7,8 +7,6 @@
 {% block content %}
 
 <div class='col-sm-8'>
-<button class='btn btn-lg btn-primary pull-right' data-toggle="modal" data-target="#myModal">Drop a Note</button>
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -37,8 +35,10 @@
   </div>
 </div>
 
-
-<h2 class="page-header">Note Feed</h2>
+<div class='page-header'>
+  <h2 id='header'>Note Feed</h2>
+  <button id='drop-note-btn' class='btn btn-md btn-primary pull-right' data-toggle="modal" data-target="#myModal">Drop a Note</button>
+</div>
 {% for post in posts %}
 <div class='post'>
 
@@ -75,7 +75,7 @@
     {% render_field filter.form.author class+='form-control' %}
     <label for='id_rating'>Rating</label>
     {% render_field filter.form.rating class+='form-control' %}
-    <input class='btn btn-sm btn-primary btn-block form-control' type="submit" value='Filter Results' />
+    <input class='btn btn-md btn-primary btn-block form-control' type="submit" value='Filter Results' />
   </form>
 </aside>
 
@@ -202,6 +202,14 @@ function update_rating_btns(data){
 .well-header {
   font-size: 2em;
   padding-bottom: 20px;
+}
+#drop-note-btn {
+  display: inline;
+  vertical-align: baseline;
+}
+#header {
+  display:inline;
+  width: 400px;
 }
 </style>
 {% endblock %}
