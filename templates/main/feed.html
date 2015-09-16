@@ -38,15 +38,15 @@
 </div>
 
 
-<h2>Note Feed</h2>
+<h2 class="page-header">Note Feed</h2>
 {% for post in posts %}
 <div class='post'>
 
   <div class='post-info'>
-    <span class='post-course'><strong>{{ post.obj.course }}</strong></span>
+    <span class='post-course bg-warning'><strong>{{ post.obj.course }}</strong></span>
     <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
     <p class='post-content'>{{ post.obj }}</p>
-    <span class='post-created'>Created {{ post.obj.created }}</span>
+    <em><span class='text-muted'>Created {{ post.obj.created }}</span></em>
     <a class='post-permalink' href='{% url 'posts' post_pk=post.obj.pk %}'>&#8734;</a>
   </div>
 
@@ -66,9 +66,16 @@
 <aside class='col-sm-4 well'>
   <a href='{% url 'feed' %}' class='btn btn-sm btn-default pull-right'>Clear</a>
   <span class='well-header'>Filters</span>
-  <form class='input-group' action='{% url 'feed' %}' method='get'>
-    {{ filter.form.as_p }}
-    <input class='btn btn-sm btn-primary btn-block' type="submit" />
+  <form class='form-group' action='{% url 'feed' %}' method='get'>
+    <label for='id_course'>{{filter.form.course.label}}</label>
+    {% render_field filter.form.course class+='form-control' %}
+    <label for='id_created'>{{ filter.form.created.label }}</label>
+    {% render_field filter.form.created class+='form-control' %}
+    <label for='id_author'>Author</label>
+    {% render_field filter.form.author class+='form-control' %}
+    <label for='id_rating'>Rating</label>
+    {% render_field filter.form.rating class+='form-control' %}
+    <input class='btn btn-sm btn-primary btn-block form-control' type="submit" value='Filter Results' />
   </form>
 </aside>
 
@@ -168,12 +175,12 @@ function update_rating_btns(data){
   display: inline-block;
   vertical-align: top;
   width: 90%;
-  border-bottom: 1px solid rgb(0, 158, 200);
+  border-bottom: 1px solid black;
 }
-.post-course {
+/*.post-course {
   font-size: 12px;
   color: rgb(166, 2, 105);
-}
+}*/
 .post-author {
   float: right;
 }
@@ -183,10 +190,10 @@ function update_rating_btns(data){
   padding-left: 15px;
   padding-bottom: 15px;
 }
-.post-created {
+/*.post-created {
   font-size: 10px;
   font-style: italic;
-}
+}*/
 .post-permalink {
   text-decoration: none;
   font-size: 18px;
