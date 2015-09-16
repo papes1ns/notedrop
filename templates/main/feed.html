@@ -103,7 +103,7 @@ $(document).ready(function(){
           btn.css('color', 'rgb(255, 145, 0)');
         }
         else {
-          btn.css('color', 'rgb(193, 193, 193)');
+          btn.css('color', 'black');
         }
       });
   });
@@ -129,15 +129,15 @@ function update_rating_btns(data){
   $('.post-'+data['post_pk'].toString()+' > .post-rating').text(data['rating']);
   if(data['upvote'] == true){
     $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(255, 145, 0)');
-    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(193, 193, 193)');
+    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'black');
   }
   else if(data['upvote'] == false){
     $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(255, 145, 0)');
-    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(193, 193, 193)');
+    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'black');
   }
   else{
-    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'rgb(193, 193, 193)');
-    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'rgb(193, 193, 193)');
+    $('.post-'+data['post_pk'].toString()+' > .down-btn').css('color', 'black');
+    $('.post-'+data['post_pk'].toString()+' > .up-btn').css('color', 'black');
   }
 }
 
