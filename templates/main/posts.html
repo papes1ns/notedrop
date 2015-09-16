@@ -3,19 +3,18 @@
 {% block title %}Note by ID{% endblock %}
 
 {% block content %}
-<h2>Note #{{ post.pk }}</h2>
-<table>
+<h2 class='page-header'>Note #{{ post.pk }}</h2>
+<p class='lead bg-warning'>
+  {{ post.content }}
+</p>
+<table class='table'>
   <tr>
     <td>Author</td>
-    <td>{{ post.author }}</td>
+    <td><a href='{% url 'users' username=post.author %}'>{{ post.author }}</td>
   </tr>
   <tr>
     <td>Course</td>
     <td>{{ post.course }}</td>
-  </tr>
-  <tr>
-    <td>Contents</td>
-    <td>{{ post.content }}</td>
   </tr>
   <tr>
     <td>Created On</td>

@@ -3,13 +3,13 @@
 {% block title %}Course Selection{% endblock %}
 
 {% block content %}
-<h1 class="page-header">Select the course you wish to follow</h1>
+<h1>Select the course you wish to follow</h1>
 
-<table>
+<table class='table'>
 {% for course_user in courses_users %}
   <tr>
     <td>{{ course_user.0 }} ({{ course_user.1 }} users)</td>
-    <td><button class='course-handler' value='{{ course_user.0.pk }}'>Follow</button></td>
+    <td><button class='btn btn-md btn-default course-handler' value='{{ course_user.0.pk }}'>Follow</button></td>
   </tr>
 {% endfor %}
 </table>
