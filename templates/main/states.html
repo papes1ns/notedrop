@@ -3,9 +3,8 @@
 {% block title %}State Selection{% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Select the state in which your school is in</h1>
-
-  <table>
+  <h1>Select the state in which your school is in</h1>
+  <table class='table'>
     <tr>
     {% for state in states %}
       <td><a href='{% url 'school_selection' state=state|slugify %}'>{{ state }}</a></td>

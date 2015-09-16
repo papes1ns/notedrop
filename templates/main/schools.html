@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1 class="page-header">Select the school in which your course is in</h1>
-  <input id='school-search' type='text' placeholder='School Search' />
+  <input class='form-control' id='school-search' type='text' placeholder='School Search' />
   
   <ul id='school-list'>
   {% for school in schools %}
@@ -28,4 +28,9 @@ $(document).ready(function(){
   });
 });
 </script>
+<style>
+#school-search {
+  margin-bottom: 20px;
+}
+</style>
 {% endblock %}
