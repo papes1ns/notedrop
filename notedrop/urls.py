@@ -3,6 +3,11 @@ from django.contrib import admin
 from main.views import feed, select_course, post_course, course_form, profile, post_options, users, posts, post_delete, starred, note_drop
 from authentication.views import login_user, logout_user, signup
 
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     url(r'^$', feed, name='feed'),
     url(r'^posts/(?P<post_pk>[0-9]+)/$', posts, name='posts'),
@@ -22,4 +27,4 @@ urlpatterns = [
     url(r'^logout/$', logout_user, name='logout'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^helm/', include(admin.site.urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

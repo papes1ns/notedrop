@@ -50,10 +50,11 @@ def feed(request):
 
 @login_required
 def note_drop(request):
+    print request
+
     referer =  request.META.get('HTTP_REFERER', None)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
-        print request.FILES
         errors = []
         if form.is_valid():
             form = form.save(commit=False)

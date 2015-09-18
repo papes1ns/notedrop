@@ -36,21 +36,20 @@ class School(models.Model):
 
 
 class Post(models.Model):
-    
+
     def get_img_path(self, filename):
         ext = filename.split('.')[-1]
         filename = "{name}.{ext}".format(name=uuid.uuid4(), ext=ext)
         return os.path.join('imgs', filename)
 
     author = models.ForeignKey(User)
-    
+
     course = models.ForeignKey('Course')
     content = models.TextField()
     image = models.ImageField(upload_to=get_img_path, blank=True, null=True)
-    
+
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
-    # TODO add field for uploaded media (docs, pictures, etc.)
 
     def __unicode__(self):
         if len(self.content) > 200:

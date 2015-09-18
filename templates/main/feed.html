@@ -16,8 +16,8 @@
         <h4 class="modal-title" id="myModalLabel">Drop a Note</h4>
       </div>
       <div class="modal-body">
-        
-        <form id='note-drop-form' class='form-group' action='{% url 'note_drop' %}' method='post' enctype="multipart/form-data">
+
+        <form enctype='multipart/form-data' id='note-drop-form' class='form-group'  method='post' action='{% url 'note_drop' %}'>
           <div id='note-drop-form-errors' class='alert alert-danger' hidden></div>
           {% csrf_token %}
             <label for='id_course'>{{ form.course.label }}</label>
@@ -27,7 +27,7 @@
             <label for="id_image">{{ form.image.label }}</label>
             {% render_field form.image class+='form-control' %}
             <p class="help-block">Image formats only (PNG, JPEG, TIFF, GIFF)</p>
-  
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -98,21 +98,32 @@
 {% block extra_head %}
 <script>
 $(document).ready(function(){
-  
+
   $('#note-drop-submit').click(function(e){
     e.preventDefault();
     $('#note-drop-form-errors').empty();
-    $.post('{% url 'note_drop' %}', $('#note-drop-form').serialize())
-      .done(function(data){
-        window.location.replace(data);
-      })
-      .fail(function(data){
-        errors = eval(data.responseText);
-        for(var i=0; i < errors.length; i++){
-          $('#note-drop-form-errors').append(errors[i] + '</br>');
-        }
-        $('#note-drop-form-errors').show();
-      });
+
+    var data = new FormData($('#note-drop-form')[0]);
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'note_drop' %}",
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      multiple: true,
+      data: data
+    })
+    .done(function(data){
+      window.location.replace(data);
+    })
+    .fail(function(data){
+      errors = eval(data.responseText);
+      for(var i=0; i < errors.length; i++){
+        $('#note-drop-form-errors').append(errors[i] + '</br>');
+      }
+      $('#note-drop-form-errors').show();
+    });
   });
 
   $('.noted-btn').click(function(){
