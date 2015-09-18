@@ -40,7 +40,7 @@ class Post(models.Model):
     
     course = models.ForeignKey('Course')
     content = models.TextField()
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
     
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
