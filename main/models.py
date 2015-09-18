@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class UserProfile(models.Model):
@@ -39,7 +40,7 @@ class Post(models.Model):
     
     course = models.ForeignKey('Course')
     content = models.TextField()
-    image = models.ImageField(upload_to='imgs/', blank=True, null=True)
+    image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank=True, null=True)
     
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
