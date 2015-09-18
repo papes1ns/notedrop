@@ -19,3 +19,4 @@ DATABASES = {
 }
 
 STATIC_ROOT = '/opt/notedrop/static/'
+STATIC_ROOT = '/opt/notedrop/media/'

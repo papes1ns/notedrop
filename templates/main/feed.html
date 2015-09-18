@@ -17,7 +17,7 @@
       </div>
       <div class="modal-body">
         
-        <form id='note-drop-form' class='form-group' action='{% url 'note_drop' %}' method='post'>
+        <form id='note-drop-form' class='form-group' action='{% url 'note_drop' %}' method='post' enctype="multipart/form-data">
           <div id='note-drop-form-errors' class='alert alert-danger' hidden></div>
           {% csrf_token %}
             <label for='id_course'>{{ form.course.label }}</label>
