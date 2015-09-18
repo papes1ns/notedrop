@@ -1,6 +1,7 @@
+import uuid
+import os
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
 
 
 class UserProfile(models.Model):
@@ -35,12 +36,17 @@ class School(models.Model):
 
 
 class Post(models.Model):
-    # TODO rename this to Note
+    
+    def get_img_path(self, filename):
+        ext = filename.split('.')[-1]
+        filename = "{name}.{ext}".format(name=uuid.uuid4(), ext=ext)
+        return os.path.join('imgs', filename)
+
     author = models.ForeignKey(User)
     
     course = models.ForeignKey('Course')
     content = models.TextField()
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to=get_img_path, blank=True, null=True)
     
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
