@@ -6,7 +6,7 @@ from .models import Course, UserProfile, Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('course', 'content',)
+        fields = ('course', 'content', 'image')
 
     content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 50}))
 
