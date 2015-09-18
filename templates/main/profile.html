@@ -10,6 +10,7 @@
 <input id='notify-count-input' type='number' min='0' max='255' placeholder={{ notify_count }} value={{ notify_count }} /> <button class='btn btn-md btn-default' id='notify-count-btn'>Update</button>
 
 <h2>Here are the courses you are following</h2>
+{% if courses %}
 <table class='table'>
   {% for course in courses %}
   <tr>
@@ -18,17 +19,29 @@
   </tr>
   {% endfor %}
 </table>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 <a class='btn btn-md btn-primary' href={% url 'state_selection' %}>Add another course</a>
 
 <h2>Here are the schools of the courses you're following</h2>
+{% if schools %}
 <ul id='school-list'>
 {% for school in schools %}
   <li>{{ school.name }} - {{ school.city }}, {{ school.state }}</li>
 {% endfor %}
 </ul>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 <h2>Here are your Notes</h2>
+{% if posts %}
 <table class='table'>
 {% for post in posts %}
   <tr>
@@ -38,6 +51,11 @@
   </tr>
 {% endfor %}
 </table>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 {% endblock %}
 

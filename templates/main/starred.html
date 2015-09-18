@@ -3,8 +3,9 @@
 {% block title %}Starred Notes{% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Here are the notes you starred</h1>
-  <table class='starred-post-tbl'>
+  <h1>Here are the notes you starred</h1>
+  {% if posts %}
+  <table class='table'>
     {% for post in posts %}
       <tr>
         <td>{{ post.post.content }}</td>
@@ -12,4 +13,13 @@
       </tr>
     {% endfor %}
   </table>
+  {% else %}
+    <div class='alert alert-warning'>
+      No results
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block extra_head %}
+  {# TODO Add print template #}
 {% endblock %}

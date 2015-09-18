@@ -6,24 +6,45 @@
 <h1>Data related to {{ username }}</h1>
 
 <h2>Posts from this user</h2>
-<ul>
+{% if posts %}
+<table class='table'>
   {% for post in posts %}
-  <li>{{ post }}</li>
+  <tr>
+    <td>{{ post }}</td>
+    <td><a href='{% url 'posts' post_pk=post.pk %}'>Link</a></td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 <h2>Courses this user follows</h2>
+{% if courses %}
 <ul>
   {% for course in courses %}
   <li>{{ course }}</li>
   {% endfor %}
 </ul>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 <h2>Schools of the courses this user follows</h2>
+{% if schools %}
 <ul>
   {% for school in schools %}
   <li>{{ school }}</li>
   {% endfor %}
 </ul>
+{% else %}
+  <div class='alert alert-warning'>
+    No results
+  </div>
+{% endif %}
 
 {% endblock %}

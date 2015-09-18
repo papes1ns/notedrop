@@ -36,9 +36,11 @@ class School(models.Model):
 class Post(models.Model):
     # TODO rename this to Note
     author = models.ForeignKey(User)
+    
     course = models.ForeignKey('Course')
-
     content = models.TextField()
+    image = models.ImageField(blank=True, null=True)
+    
     created = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
     # TODO add field for uploaded media (docs, pictures, etc.)

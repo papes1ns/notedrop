@@ -24,6 +24,9 @@
             {% render_field form.course class+='form-control' %}
             <label for='id_content'>{{ form.content.label }}</label>
             {% render_field form.content class+='form-control' %}
+            <label for="id_image">{{ form.image.label }}</label>
+            {% render_field form.image class+='form-control' %}
+            <p class="help-block">Image formats only (PNG, JPEG, TIFF, GIFF)</p>
   
       </div>
       <div class="modal-footer">
@@ -81,8 +84,13 @@
     {% render_field filter.form.author class+='form-control' %}
     <label for='id_rating'>Rating</label>
     {% render_field filter.form.rating class+='form-control' %}
-    <input class='btn btn-md btn-primary btn-block form-control' type="submit" value='Filter Results' />
+    <input class='btn btn-md btn-primary btn-block' type="submit" value='Filter Results' />
   </form>
+</aside>
+
+<aside class='col-sm-4 well'>
+  <span class='well-header'>Course Distribution</span>
+    <div id='chart-container'></div>
 </aside>
 
 {% endblock %}

@@ -40,6 +40,7 @@ def feed(request):
 
     context['posts'] = posts
     form = PostForm()
+    print form.fields
     if 'course' in request.GET:
         form.fields['course'].initial = request.GET['course']
     context['form'] = form
