@@ -12,19 +12,18 @@ class RatingChoiceFilter(django_filters.ChoiceFilter):
             return sorted(qs, key=lambda p: p.rating, reverse=False)
         else:
             return qs
-    
-    
+
+
 class PostFilter(django_filters.FilterSet):
     class Meta:
         model = Post
-        fields = ['course', 'created', 'author', 'rating']
-    
+        fields = ['course', 'created', 'rating']
+
     RATING_CHOICES = (
         ('0', 'All'),
         ('1', 'High'),
         ('-1', 'Low')
     )
-            
+
     created = django_filters.DateRangeFilter()
     rating = RatingChoiceFilter(choices=RATING_CHOICES)
-    

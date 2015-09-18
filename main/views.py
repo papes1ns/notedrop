@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.forms import widgets
 
 from .models import School, Course, UserProfile, Post, PostData
@@ -17,7 +18,7 @@ def feed(request):
     context = {}
     posts = []
     f = PostFilter(request.GET, queryset=Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'))
-    
+
     for p in f:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
@@ -77,13 +78,13 @@ def profile(request, username=None):
             schools = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
             data = serializers.serialize('json', schools, fields=('name','state', 'city',))
             return HttpResponse(data)
-        
+
         if request.POST.get('notify_count', None):
             profile = UserProfile.objects.get(user=request.user)
             profile.notify_count = request.POST['notify_count']
             profile.save()
             return HttpResponse(profile.notify_count)
-        
+
     context['notify_count'] = request.user.profile.notify_count
     context['posts'] = Post.objects.filter(archived=False, author=request.user)
     context['schools'] = School.objects.filter(pk__in=request.user.profile.courses.all().values('school').distinct())
@@ -222,7 +223,7 @@ def post_delete(request, post_pk=None):
             post.save()
 
     return redirect('profile')
-    
+
 @login_required
 def starred(request):
     context = {}
