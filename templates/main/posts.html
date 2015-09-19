@@ -6,6 +6,9 @@
 <h2 class='page-header'>Note #{{ post.pk }}</h2>
 <p class='lead bg-warning'>
   {{ post.content }}
+  {% if post.image %}
+    <img src='/media/{{ post.image }}' class='img-responsive post-image' />
+  {% endif %}
 </p>
 <table class='table'>
   <tr>
