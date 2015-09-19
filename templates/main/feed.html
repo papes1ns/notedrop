@@ -91,9 +91,9 @@
   </form>
 </aside>
 
-<aside class='col-sm-4 well'>
-  <span class='well-header'>Course Distribution</span>
-    <div id='chart-container'></div>
+<aside class='col-sm-4 pull-right well'>
+  <span class='well-header'>Post Distribution</span>
+    <canvas id='course-distribution' width="300" height="300"></canvas>
 </aside>
 
 {% endblock %}
@@ -101,6 +101,12 @@
 {% block extra_head %}
 <script>
 $(document).ready(function(){
+
+  var ctx = $("#course-distribution").get(0).getContext("2d");
+  new Chart(ctx).Doughnut({{ chart_data|safe }},{
+    animateScale : true,
+    segmentShowStroke : true,
+  });
 
   $('#note-drop-submit').click(function(e){
     e.preventDefault();

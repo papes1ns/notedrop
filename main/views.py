@@ -1,4 +1,6 @@
 import json
+import random
+from colour import Color
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -38,6 +40,19 @@ def feed(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         posts = paginator.page(paginator.num_pages)
 
+    def gen_hex_color_code():
+        return ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+
+    chart_data = []
+    for course in request.user.profile.courses.all():
+        chart_data.append({
+            'value': Post.objects.filter(course=course).count(),
+            'label': course.name,
+            'color': '#' + gen_hex_color_code(),
+            'highlight': '#' + gen_hex_color_code(),
+        })
+
+    context['chart_data'] = json.dumps(chart_data)
     context['posts'] = posts
     form = PostForm()
     if 'course' in request.GET:
@@ -144,6 +159,7 @@ def course_form(request):
             request.user.profile.courses.add(course)
             return redirect('feed')
         else:
+            print form.errors
             context['form'] = form
             return render(request, 'main/course_form.html', context)
 
