@@ -50,6 +50,9 @@
       <span class='post-course bg-warning'>{{ post.obj.course }}</span>
       <span class='post-author'><a href='{% url 'users' username=post.obj.author %}'>{{ post.obj.author }}</a></span>
       <p class='post-content'><strong>{{ post.obj }}</strong></p>
+      {% if post.obj.image %}
+        <img src='/media/{{ post.obj.image }}' class='img-responsive post-image' />
+      {% endif %}
       <em><span class='text-muted'>Created {{ post.obj.created }}</span></em>
       <a class='post-permalink' href='{% url 'posts' post_pk=post.obj.pk %}'>&#8734;</a>
     </div>

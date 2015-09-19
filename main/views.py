@@ -40,7 +40,6 @@ def feed(request):
 
     context['posts'] = posts
     form = PostForm()
-    print form.fields
     if 'course' in request.GET:
         form.fields['course'].initial = request.GET['course']
     context['form'] = form
@@ -50,8 +49,6 @@ def feed(request):
 
 @login_required
 def note_drop(request):
-    print request
-
     referer =  request.META.get('HTTP_REFERER', None)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)

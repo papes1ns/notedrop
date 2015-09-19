@@ -1,7 +1,7 @@
 .post {
   margin-top: 20px;
   border-radius: 10px;
-  border-bottom: 2px solid rgb(179, 179, 179);
+  border-bottom: 3px solid rgb(179, 179, 179);
 }
 .post-options {
   display: inline-block;
@@ -43,9 +43,12 @@
   font-size: 10px;
   font-style: italic;
 }*/
+.post-image {
+  margin-bottom: 10px;
+}
 .post-permalink {
   text-decoration: none;
-  font-size: 18px;
+  font-size: 24px;
   float: right;
 }
 .well-header {
