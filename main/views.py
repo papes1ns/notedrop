@@ -1,6 +1,6 @@
 import json
 import random
-from colour import Color
+
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
