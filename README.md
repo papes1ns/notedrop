@@ -8,13 +8,13 @@ Current versions will be running at 52.88.79.68.
 - [x] Script that imports data for colleges and state names
 - [x] Subscribe to sections (if not present, create new one)
 - [x] Feed of posts from other students in the same classes
-- [ ] Algorithm for feed post order
+- [x] Filter feed post by course, time posted and rating
 - [x] Rating system for posts (archive post based on downvotes)
-- [ ] Email users when post has certain # of upvotes (option to turn off)
-- [ ] Form input validation and cleaning
+- [x] Email users when post has certain # of upvotes (option to turn off)
+- [x] Form input validation and cleaning
 - [x] User profiles with their posts
-- [ ] Support file uploads in posts
-- [ ] Site fully hosted and running on web server
+- [x] Support file uploads in posts
+- [x] Site fully hosted and running on web server
 
 
 ### Thoughts
