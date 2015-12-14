@@ -19,9 +19,10 @@ from .filters import PostFilter
 def feed(request):
     context = {}
     posts = []
-    f = PostFilter(request.GET, queryset=Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'))
-    f.form.fields["course"].queryset = request.user.profile.courses.all()
-    
+    f = PostFilter(request.GET, queryset=Post.objects.filter(archived=False,
+                                                             course__in=request.user.profile.courses.all()).order_by('-created'),
+                                                             user=request.user)
+
     for p in f:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
@@ -55,7 +56,7 @@ def feed(request):
 
     context['chart_data'] = json.dumps(chart_data)
     context['posts'] = posts
-    form = PostForm()
+    form = PostForm(user=request.user)
     if 'course' in request.GET:
         form.fields['course'].initial = request.GET['course']
     context['form'] = form
