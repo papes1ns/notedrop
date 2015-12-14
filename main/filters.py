@@ -1,7 +1,7 @@
 import django_filters
 from django import forms
 from .models import Post
-
+from django.db.models.query import QuerySet
 
 class RatingChoiceFilter(django_filters.ChoiceFilter):
 
@@ -19,11 +19,18 @@ class PostFilter(django_filters.FilterSet):
         model = Post
         fields = ['course', 'created', 'rating']
 
+    # def __init__(self, *args, **kwargs):
+    #     self.user = kwargs.pop("user", None)
+    #
+    #     q = self.user.profile.courses.all()
+    #     super(PostFilter, self).__init__(*args, **kwargs)
+
     RATING_CHOICES = (
         ('0', 'All'),
         ('1', 'High'),
         ('-1', 'Low')
     )
 
+    # course = django_filters.ModelChoiceFilter(queryset=q)
     created = django_filters.DateRangeFilter()
     rating = RatingChoiceFilter(choices=RATING_CHOICES)

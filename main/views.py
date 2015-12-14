@@ -20,7 +20,8 @@ def feed(request):
     context = {}
     posts = []
     f = PostFilter(request.GET, queryset=Post.objects.filter(archived=False, course__in=request.user.profile.courses.all()).order_by('-created'))
-
+    f.form.fields["course"].queryset = request.user.profile.courses.all()
+    
     for p in f:
         post_data, created = PostData.objects.get_or_create(post=p, user=request.user)
         posts.append({
