@@ -13,12 +13,16 @@
   <h1 class='page-header'>Add course</h1>
 {% endif %}
 
+{% if errors %}
+  <div class="alert alert-danger">
+    {{ errors }}
+  </div>
+{% endif %}
+
 <form class='form-group' action='{% url 'course_form' %}' method='post'>
   {% csrf_token %}
-    {% if not school %}
-      <label for='id_school'>{{ form.school.label }}</label>
-      {% render_field form.school class+='form-control' %}
-    {% endif %}
+    <label for='id_school'>{{ form.school.label }}</label>
+    {% render_field form.school class+='form-control' %}
     <label for='id_designator'>{{ form.designator.label }}</label>
     {% render_field form.designator class+='form-control' %}
     <label for='id_number'>{{ form.number.label }}</label>

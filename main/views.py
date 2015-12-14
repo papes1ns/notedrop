@@ -159,7 +159,7 @@ def course_form(request):
             request.user.profile.courses.add(course)
             return redirect('feed')
         else:
-            print form.errors
+            context['errors'] = form.errors
             context['form'] = form
             return render(request, 'main/course_form.html', context)
 
