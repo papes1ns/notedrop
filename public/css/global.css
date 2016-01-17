@@ -1,0 +1,102 @@
+.post {
+  margin-top: 20px;
+  border-radius: 10px;
+  border-bottom: 3px solid rgb(179, 179, 179);
+}
+.post-options {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 5px;
+  padding-bottom: 0px;
+}
+.post-options-btn {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 20px;
+}
+.post-rating {
+  font-size: 18px;
+  padding-left: 5px;
+}
+.post-info {
+  display: inline-block;
+  width: 93%;
+  padding: 10px 20px 0px 20px;
+  border-radius: 10px;
+}
+/*.post-course {
+  font-size: 12px;
+  color: rgb(166, 2, 105);
+}*/
+.post-author {
+  float: right;
+}
+.post-content {
+  font-size: 20px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+}
+/*.post-created {
+  font-size: 10px;
+  font-style: italic;
+}*/
+.post-image {
+  margin-bottom: 10px;
+}
+.post-permalink {
+  text-decoration: none;
+  font-size: 24px;
+  float: right;
+}
+.well-header {
+  font-size: 2em;
+  padding-bottom: 20px;
+}
+.page-header {
+  margin-top: 5px;
+}
+.form-signin {
+  max-width: 500px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#drop-note-btn {
+  display: inline;
+  vertical-align: baseline;
+}
+#header {
+  display:inline;
+  width: 400px;
+}
+#school-search {
+  margin-bottom: 20px;
+}
